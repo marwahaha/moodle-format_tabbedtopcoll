@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Collapsed Topics Information
+ * Collapsed Tabbed Topics Information
  *
  * A topic based format that solves the issue of the 'Scroll of Death' when a course has many topics. All topics
  * except zero have a toggle that displays that topic. One or more topics can be displayed at any given time.
@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @category   event
  * @version    See the value of '$plugin->version' in below.
  * @copyright  &copy; 2017-onwards G J Barnard based upon work done by Marina Glancy.
@@ -40,7 +40,7 @@ $observers = array(
 
     array(
         'eventname'   => '\core\event\course_content_deleted',
-        'callback'    => 'format_topcoll_observer::course_content_deleted',
+        'callback'    => 'format_tabbedtopcoll_observer::course_content_deleted',
     ),
 
 );

@@ -18,7 +18,7 @@
  * Collapsed Topics course format.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2018-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -29,12 +29,12 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Togglelib unit tests for the Collapsed Topics course format.
- * @group format_topcoll
+ * @group format_tabbedtopcoll
  */
-class format_topcoll_togglelib_testcase extends advanced_testcase {
+class format_tabbedtopcoll_togglelib_testcase extends advanced_testcase {
 
     public function test_decode_toggle_state() {
-        $togglelib = new \format_topcoll\togglelib;
+        $togglelib = new \format_tabbedtopcoll\togglelib;
 
         $mindigit = $togglelib->get_min_digit();
         $maxdigit = $togglelib->get_max_digit();

@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @category   event
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2017-onwards G J Barnard based upon work done by Marina Glancy.
@@ -38,7 +38,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Event observers supported by this format.
  */
-class format_topcoll_observer {
+class format_tabbedtopcoll_observer {
 
     /**
      * Observer for the event course_content_deleted.

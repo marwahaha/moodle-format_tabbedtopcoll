@@ -18,7 +18,7 @@
  * Collapsed Topics course format.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2015-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -29,9 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Renderer unit tests for the Collapsed Topics course format.
- * @group format_topcoll
+ * @group format_tabbedtopcoll
  */
-class format_topcoll_courseformatrenderer_testcase extends advanced_testcase {
+class format_tabbedtopcoll_courseformatrenderer_testcase extends advanced_testcase {
 
     protected $outputus;
     protected $course;
@@ -87,9 +87,9 @@ class format_topcoll_courseformatrenderer_testcase extends advanced_testcase {
 
         set_config('theme', 'clean');
         global $PAGE;
-        $this->outputus = $PAGE->get_renderer('format_topcoll');
+        $this->outputus = $PAGE->get_renderer('format_tabbedtopcoll');
         // Ref: https://docs.moodle.org/dev/Writing_PHPUnit_tests.
-        $this->course = $this->getDataGenerator()->create_course(array('format' => 'topcoll', 'numsections' => 1),
+        $this->course = $this->getDataGenerator()->create_course(array('format' => 'tabbedtopcoll', 'numsections' => 1),
             array('createsections' => true));
 
         $this->courseformat = course_get_format($this->course);
@@ -270,12 +270,12 @@ class format_topcoll_courseformatrenderer_testcase extends advanced_testcase {
         global $CFG;
 
         $theclass = self::call_method($this->outputus, 'display_instructions', array());
-        $thevalue = '<li class="tcsection main clearfix" id="topcoll-display-instructions"><div class="left side">';
+        $thevalue = '<li class="tcsection main clearfix" id="tabbedtopcoll-display-instructions"><div class="left side">';
         $thevalue .= '<img class="icon spacer" width="1" height="1" alt="" src="';
         $thevalue .= $CFG->wwwroot.'/theme/image.php/_s/clean/core/1/spacer" /></div><div class="right side">';
         $thevalue .= '<img class="icon spacer" width="1" height="1" alt="" src="';
         $thevalue .= $CFG->wwwroot.'/theme/image.php/_s/clean/core/1/spacer" /></div><div class="content">';
-        $thevalue .= '<div class="sectionbody"><p class="topcoll-display-instructions">Instructions: Clicking on the section ';
+        $thevalue .= '<div class="sectionbody"><p class="tabbedtopcoll-display-instructions">Instructions: Clicking on the section ';
         $thevalue .= 'name will show / hide the section.</p></div></div></li>';
 
         $this->assertEquals($thevalue, $theclass);

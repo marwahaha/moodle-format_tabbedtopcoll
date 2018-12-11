@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2018-onwards G J Barnard in respect to modifications of core code.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -32,7 +32,7 @@
  *
  */
 
-namespace format_topcoll\output;
+namespace format_tabbedtopcoll\output;
 
 class course_module_name extends \core_course\output\course_module_name {
     /**
@@ -43,7 +43,7 @@ class course_module_name extends \core_course\output\course_module_name {
      */
     public function export_for_template(\renderer_base $output) {
         global $PAGE;
-        $courserenderer = $PAGE->get_renderer('format_topcoll', 'course'); // Use our renderer instead.
+        $courserenderer = $PAGE->get_renderer('format_tabbedtopcoll', 'course'); // Use our renderer instead.
         $this->displayvalue = $courserenderer->course_section_cm_name_title($this->cm, $this->displayoptions);
         if (strval($this->displayvalue) === '') {
             $this->editable = false;

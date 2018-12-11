@@ -21,7 +21,7 @@
  * function in /course/format/topcol/module.js.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2014-onwards G J Barnard based upon code originally written by Tim Hunt.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
@@ -43,7 +43,7 @@ if (!isset($USER->ajax_updatable_user_prefs[$name])) {
 }
 
 // Get and set the value.
-$value = \format_topcoll\togglelib::required_topcoll_param('value');
+$value = \format_tabbedtopcoll\togglelib::required_tabbedtopcoll_param('value');
 // Update.
 if ($value) {
     if (!set_user_preference($name, $value)) {

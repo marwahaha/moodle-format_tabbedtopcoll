@@ -18,7 +18,7 @@
  * Unit tests for the implementation of the privacy API.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2018-onwards G J Barnard based upon code originally written by Andrew Nicols.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -30,13 +30,13 @@ defined('MOODLE_INTERNAL') || die();
 
 use \core_privacy\local\metadata\collection;
 use \core_privacy\local\request\writer;
-use \format_topcoll\privacy\provider;
+use \format_tabbedtopcoll\privacy\provider;
 
 /**
  * Privacy unit tests for the Collapsed Topics course format.
- * @group format_topcoll
+ * @group format_tabbedtopcoll
  */
-class format_topcoll_privacy_testcase extends \core_privacy\tests\provider_testcase {
+class format_tabbedtopcoll_privacy_testcase extends \core_privacy\tests\provider_testcase {
 
     protected $outputus;
     protected $course;
@@ -77,9 +77,9 @@ class format_topcoll_privacy_testcase extends \core_privacy\tests\provider_testc
 
         set_config('theme', 'clean');
         global $PAGE;
-        $this->outputus = $PAGE->get_renderer('format_topcoll');
+        $this->outputus = $PAGE->get_renderer('format_tabbedtopcoll');
         // Ref: https://docs.moodle.org/dev/Writing_PHPUnit_tests.
-        $this->course = $this->getDataGenerator()->create_course(array('format' => 'topcoll', 'numsections' => $this->numsections),
+        $this->course = $this->getDataGenerator()->create_course(array('format' => 'tabbedtopcoll', 'numsections' => $this->numsections),
             array('createsections' => true));
 
         $this->courseformat = course_get_format($this->course);
@@ -95,7 +95,7 @@ class format_topcoll_privacy_testcase extends \core_privacy\tests\provider_testc
      * Ensure that get_metadata exports valid content.
      */
     public function test_get_metadata() {
-        $items = new collection('format_topcoll');
+        $items = new collection('format_tabbedtopcoll');
         $result = provider::get_metadata($items);
         $this->assertSame($items, $result);
         $this->assertInstanceOf(collection::class, $result);
@@ -117,7 +117,7 @@ class format_topcoll_privacy_testcase extends \core_privacy\tests\provider_testc
      * Ensure that export_user_preferences returns request data.
      */
     public function test_export_user_preferences() {
-        $togglelib = new \format_topcoll\togglelib;
+        $togglelib = new \format_tabbedtopcoll\togglelib;
 
         $this->set_up();
         $this->setAdminUser();
@@ -131,14 +131,14 @@ class format_topcoll_privacy_testcase extends \core_privacy\tests\provider_testc
 
         $this->assertTrue($writer->has_any_data());
 
-        $prefs = (array) $writer->get_user_preferences('format_topcoll');
+        $prefs = (array) $writer->get_user_preferences('format_tabbedtopcoll');
 
         $this->assertCount(1, $prefs);
 
         $toggle = $prefs['topcoll_toggle_'.$this->course->id];
         $this->assertEquals('FAB', $toggle->value);
 
-        $description = get_string('privacy:request:preference:toggle', 'format_topcoll', (object) [
+        $description = get_string('privacy:request:preference:toggle', 'format_tabbedtopcoll', (object) [
             'name' => $this->course->id,
             'value' => 'FAB',
             'decoded' => $togglelib->decode_toggle_state('FAB'),

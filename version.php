@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in below.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://about.me/gjbarnard} and
@@ -37,5 +37,5 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->version = 2018052302;
 $plugin->maturity = MATURITY_BETA;
 $plugin->requires  = 2018051700.00; // 3.5 (Build: 20180517).
-$plugin->component = 'format_topcoll';
+$plugin->component = 'format_tabbedtopcoll';
 $plugin->release = '3.5.0.3';

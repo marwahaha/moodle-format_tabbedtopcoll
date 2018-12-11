@@ -4,7 +4,7 @@ Topic based course format with an individual 'toggle' for each topic except 0.
 
 If you find an issue with the format, please see the 'Reporting Issues' section below.
 
-[![Build Status](https://travis-ci.org/gjb2048/moodle-format_topcoll.svg?branch=master)](https://travis-ci.org/gjb2048/moodle-format_topcoll)
+[![Build Status](https://travis-ci.org/gjb2048/moodle-format_tabbedtopcoll.svg?branch=master)](https://travis-ci.org/gjb2048/moodle-format_tabbedtopcoll)
 
 Required version of Moodle
 ==========================
@@ -16,12 +16,12 @@ Please ensure that your hardware and software complies with 'Requirements' in 'I
 
 Downloads and documentation
 ===========================
-The primary source for downloading this branch of the format is https://moodle.org/plugins/view.php?plugin=format_topcoll
+The primary source for downloading this branch of the format is https://moodle.org/plugins/view.php?plugin=format_tabbedtopcoll
 with 'Select Moodle version:' set at 'Moodle 3.5'.
 
-The secondary source is a tagged version with the v3.5 prefix on https://github.com/gjb2048/moodle-format_topcoll/tags
+The secondary source is a tagged version with the v3.5 prefix on https://github.com/gjb2048/moodle-format_tabbedtopcoll/tags
 
-If you download from the development area - https://github.com/gjb2048/moodle-format_topcoll/ - consider that
+If you download from the development area - https://github.com/gjb2048/moodle-format_tabbedtopcoll/ - consider that
 the code is unstable and not for use in production environments.  This is because I develop the next version in stages
 and use GitHub as a means of backup.  Therefore the code is not finished, subject to alteration and requires testing.
 
@@ -43,7 +43,7 @@ FAQ - http://www.gnu.org/licenses/gpl-faq.html - is a good place to look.
 If you reuse any of the code then I kindly ask that you make reference to the format.
 
 If you make improvements or bug fixes then I would appreciate if you would send them back to me by forking from
-https://github.com/gjb2048/moodle-format_topcoll and doing a 'Pull Request' so that the rest of the
+https://github.com/gjb2048/moodle-format_tabbedtopcoll and doing a 'Pull Request' so that the rest of the
 Moodle community benefits.
 
 Support
@@ -111,7 +111,7 @@ So:
 2. In '/course/format/' move old 'topcoll' directory to a backup folder outside of Moodle.
 3. Do not copy in the new version of 'topcoll' yet!  As this will cause the upgrade to fail.
 4. Upgrade to Moodle 2.2 first - http://docs.moodle.org/22/en/Upgrading_to_Moodle_2.2.
-5. After you have installed Moodle 2.2, now upgrade to Moodle 2.4 with this new topcoll -
+5. After you have installed Moodle 2.2, now upgrade to Moodle 2.4 with this new tabbedtopcoll-
    http://docs.moodle.org/24/en/Upgrading_to_Moodle_2.4 - but before initiating the upgrade you can copy the
    new (i.e. this) 'topcoll' folder to '/course/format'.
 6. Now follow 'Upgrading from Moodle 2.2' below please.
@@ -139,9 +139,9 @@ NOTE: If the automated upgrade fails for which can be seen by getting errors whe
       The table prefix i.e, 'mdl_' is not stated in the instructions but ensure you know what yours is and use
       it with the table names.
 1.    In your database:
-2.1   Rename the table 'format_topcoll_layout' to 'format_topcoll_settings'.
-2.2   With the table 'format_topcoll_settings' change all integer types to signed if using a MySQL database.
-2.3   If the table 'format_topcoll_settings' does not exist, then create it and add the following fields 
+2.1   Rename the table 'format_tabbedtopcoll_layout' to 'format_tabbedtopcoll_settings'.
+2.2   With the table 'format_tabbedtopcoll_settings' change all integer types to signed if using a MySQL database.
+2.3   If the table 'format_tabbedtopcoll_settings' does not exist, then create it and add the following fields 
       in this order:
 2.3.1 'id' of type 'BIGINT(10)' type, not null, auto increment, no zero fill with a null default value - the same 
        as any other 'id' field in the other tables.  Make it the primary key.
@@ -151,14 +151,14 @@ NOTE: If the automated upgrade fails for which can be seen by getting errors whe
       of '1'.
 2.3.4 'layoutstructure' of type 'TINYINT(1)' type, not null, no auto increment, no zero fill with a default value
       of '1'.
-2.4   With the table 'format_topcoll_settings' append three new fields of 'VARCHAR(6)' type, not null, called
+2.4   With the table 'format_tabbedtopcoll_settings' append three new fields of 'VARCHAR(6)' type, not null, called
       'tgfgcolour', 'tgbgcolour' and 'tgbghvrcolour' in that order with the default values of '000000', 'e2e2f2'
       and 'eeeeff' respectively.
-2.5   With the table 'format_topcoll_settings' append a new field 'layoutcolumns' after the 'layoutstructure' field
+2.5   With the table 'format_tabbedtopcoll_settings' append a new field 'layoutcolumns' after the 'layoutstructure' field
       and with identical size, type and attributes.  The default is '1'. i.e:
 2.5.1 'layoutcolumns' of type 'TINYINT(1)' type, not null, no auto increment, no zero fill with a default value
       of '1'.
-2.6   Drop the table 'format_topcoll_cookie_cnsnt'.
+2.6   Drop the table 'format_tabbedtopcoll_cookie_cnsnt'.
 
 Uninstallation
 ==============
@@ -167,9 +167,9 @@ Uninstallation
    not done Moodle will pick the last format in your list of formats to use but display in 'Edit settings' of the
    course the first format in the list.  You can then set the desired format.
 3. In '/course/format/' remove the folder 'topcoll'.
-4. In the database, remove the table 'format_topcoll_settings' along with the entry for 'format_topcoll'
+4. In the database, remove the table 'format_tabbedtopcoll_settings' along with the entry for 'format_tabbedtopcoll'
    ('plugin' attribute) in the table 'config_plugins'.  If using the default prefix this will be
-   'mdl_format_topcoll_settings' and 'mdl_config_plugins' respectively.
+   'mdl_format_tabbedtopcoll_settings' and 'mdl_config_plugins' respectively.
 5. Put Moodle out of Maintenance Mode.
 
 Course Backup and Restore Instructions
@@ -199,11 +199,11 @@ the 'background' attribute with a 'toggle-...' type class within them.  There ar
 the 'toggle all' functionality.  For example:
 
     body.jsenabled .course-content ul.ctopics li.section .content .toggle-arrow span.toggle_closed {
-        background-image: url([[pix:format_topcoll|arrow_right]]);
+        background-image: url([[pix:format_tabbedtopcoll|arrow_right]]);
     }
 
     #toggle-all .content .toggle-arrow h4 span.off {
-        background-image: url([[pix:format_topcoll|arrow_down]]); 
+        background-image: url([[pix:format_tabbedtopcoll|arrow_down]]); 
     }
 
 If you would like your own icon set, either replace the icons in the 'pix' folder, deduce how the code works or better
@@ -231,7 +231,7 @@ Known Issues
 Reporting Issues
 ================
 Before reporting an issue, please ensure that you are running the latest version for your release of Moodle.  The primary
-release area is located on https://moodle.org/plugins/view.php?plugin=format_topcoll.  It is also essential that you are
+release area is located on https://moodle.org/plugins/view.php?plugin=format_tabbedtopcoll.  It is also essential that you are
 operating the required version of Moodle as stated at the top - this is because the format relies on core functionality that
 is out of its control.
 

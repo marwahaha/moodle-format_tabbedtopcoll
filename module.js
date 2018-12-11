@@ -7,7 +7,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
@@ -32,29 +32,29 @@
 /**
  * @namespace
  */
-M.format_topcoll = M.format_topcoll || {};
+M.format_tabbedtopcoll = M.format_tabbedtopcoll || {};
 
 // Namespace variables:
 // A constant of 26 0's to be used to pad the storage state of the toggles when converting between base 2 and 36,
 // this is to be compact.
-M.format_topcoll.thesparezeros = "00000000000000000000000000";
-M.format_topcoll.togglestate = false;
-M.format_topcoll.courseid = 0;
-M.format_topcoll.togglePersistence = 1; // Toggle persistence - 1 = on, 0 = off.
-M.format_topcoll.ourYUI = false;
-M.format_topcoll.numSections = 0;
-M.format_topcoll.oneTopic = false;
-M.format_topcoll.currentTopic = null; // For oneTopic when true represents the current open topic or null if none.
-M.format_topcoll.currentTopicNum = false; // For oneTopic when true represents the current open topic number or 0 if none.
-M.format_topcoll.userIsEditing = false;
+M.format_tabbedtopcoll.thesparezeros = "00000000000000000000000000";
+M.format_tabbedtopcoll.togglestate = false;
+M.format_tabbedtopcoll.courseid = 0;
+M.format_tabbedtopcoll.togglePersistence = 1; // Toggle persistence - 1 = on, 0 = off.
+M.format_tabbedtopcoll.ourYUI = false;
+M.format_tabbedtopcoll.numSections = 0;
+M.format_tabbedtopcoll.oneTopic = false;
+M.format_tabbedtopcoll.currentTopic = null; // For oneTopic when true represents the current open topic or null if none.
+M.format_tabbedtopcoll.currentTopicNum = false; // For oneTopic when true represents the current open topic number or 0 if none.
+M.format_tabbedtopcoll.userIsEditing = false;
 
 // Namespace constants:....
-M.format_topcoll.TOGGLE_6 = 1;
-M.format_topcoll.TOGGLE_5 = 2;
-M.format_topcoll.TOGGLE_4 = 4;
-M.format_topcoll.TOGGLE_3 = 8;
-M.format_topcoll.TOGGLE_2 = 16;
-M.format_topcoll.TOGGLE_1 = 32;
+M.format_tabbedtopcoll.TOGGLE_6 = 1;
+M.format_tabbedtopcoll.TOGGLE_5 = 2;
+M.format_tabbedtopcoll.TOGGLE_4 = 4;
+M.format_tabbedtopcoll.TOGGLE_3 = 8;
+M.format_tabbedtopcoll.TOGGLE_2 = 16;
+M.format_tabbedtopcoll.TOGGLE_1 = 32;
 
 /**
  * Initialise with the information supplied from the course format 'format.php' so we can operate.
@@ -68,7 +68,7 @@ M.format_topcoll.TOGGLE_1 = 32;
  * @param {Integer} theOneTopicToggle Number of the toggle that is open for one toggle open functionality.
  * @param {Boolean} theUserIsEditing User is editing (true) or or not (false).
  */
-M.format_topcoll.init = function(Y, theCourseId, theToggleState, theNumSections, theTogglePersistence,
+M.format_tabbedtopcoll.init = function(Y, theCourseId, theToggleState, theNumSections, theTogglePersistence,
     theDefaultTogglePersistence, theOneTopic, theOneTopicToggle, theUserIsEditing) {
     "use strict";
     // Init.
@@ -137,7 +137,7 @@ M.format_topcoll.init = function(Y, theCourseId, theToggleState, theNumSections,
     }
 };
 
-M.format_topcoll.toggleClick = function(e) {
+M.format_tabbedtopcoll.toggleClick = function(e) {
     if (this.userIsEditing) {
         var parentClasses = e.target.get('parentNode').getAttribute('class');
         if ((parentClasses.indexOf('quickediticon') > -1) || (parentClasses.indexOf('inplaceeditable') > -1)) {
@@ -149,35 +149,35 @@ M.format_topcoll.toggleClick = function(e) {
     this.toggle_topic(e.currentTarget, toggleIndex);
 };
 
-M.format_topcoll.allOpenClick = function(e) {
+M.format_tabbedtopcoll.allOpenClick = function(e) {
     e.preventDefault();
-    M.format_topcoll.ourYUI.all(".toggledsection").addClass('sectionopen');
-    M.format_topcoll.ourYUI.all(".toggle span.the_toggle").addClass('toggle_open').removeClass('toggle_closed')
+    M.format_tabbedtopcoll.ourYUI.all(".toggledsection").addClass('sectionopen');
+    M.format_tabbedtopcoll.ourYUI.all(".toggle span.the_toggle").addClass('toggle_open').removeClass('toggle_closed')
         .setAttribute('aria-pressed', 'true');
-    M.format_topcoll.resetState(M.format_topcoll.get_max_digit());
-    M.format_topcoll.save_toggles();
+    M.format_tabbedtopcoll.resetState(M.format_tabbedtopcoll.get_max_digit());
+    M.format_tabbedtopcoll.save_toggles();
 };
 
-M.format_topcoll.allCloseClick = function(e) {
+M.format_tabbedtopcoll.allCloseClick = function(e) {
     e.preventDefault();
-    M.format_topcoll.ourYUI.all(".toggledsection").removeClass('sectionopen');
-    M.format_topcoll.ourYUI.all(".toggle span.the_toggle").addClass('toggle_closed').removeClass('toggle_open')
+    M.format_tabbedtopcoll.ourYUI.all(".toggledsection").removeClass('sectionopen');
+    M.format_tabbedtopcoll.ourYUI.all(".toggle span.the_toggle").addClass('toggle_closed').removeClass('toggle_open')
         .setAttribute('aria-pressed', 'false');
-    M.format_topcoll.resetState(M.format_topcoll.get_min_digit());
-    M.format_topcoll.save_toggles();
+    M.format_tabbedtopcoll.resetState(M.format_tabbedtopcoll.get_min_digit());
+    M.format_tabbedtopcoll.save_toggles();
 };
 
-M.format_topcoll.resetState = function(dchar) {
-    M.format_topcoll.togglestate = "";
-    var numdigits = M.format_topcoll.get_required_digits(M.format_topcoll.numSections);
+M.format_tabbedtopcoll.resetState = function(dchar) {
+    M.format_tabbedtopcoll.togglestate = "";
+    var numdigits = M.format_tabbedtopcoll.get_required_digits(M.format_tabbedtopcoll.numSections);
     for (var i = 0; i < numdigits; i++) {
-        M.format_topcoll.togglestate += dchar;
+        M.format_tabbedtopcoll.togglestate += dchar;
     }
 };
 
 // Toggle functions
 // Args - targetNode that initiated the call, toggleNum the number of the toggle.
-M.format_topcoll.toggle_topic = function(targetNode, toggleNum) {
+M.format_tabbedtopcoll.toggle_topic = function(targetNode, toggleNum) {
     "use strict";
 
     if (this.oneTopic === true) {
@@ -221,7 +221,7 @@ M.format_topcoll.toggle_topic = function(targetNode, toggleNum) {
    This is all required to save cookie space, so instead of using 53 bytes (characters) per course, only 12 are used.
    Convert from a base 36 string to a base 2 string - effectively a private function.
   Args - thirtysix - a 12 character string representing a base 36 number. */
-M.format_topcoll.to2baseString = function(thirtysix) {
+M.format_tabbedtopcoll.to2baseString = function(thirtysix) {
     "use strict";
     // Break apart the string because integers are signed 32 bit and therefore can only store 31 bits, therefore a
     // 53 bit number will cause overflow / carry with loss of resolution.
@@ -245,15 +245,15 @@ M.format_topcoll.to2baseString = function(thirtysix) {
 
 /* Save the toggles - called from togglebinary and allToggle.
    AJAX call to server to save the state of the toggles for this course for the current user if on. */
-M.format_topcoll.save_toggles = function() {
+M.format_tabbedtopcoll.save_toggles = function() {
     "use strict";
     if (this.togglePersistence == 1) { // Toggle persistence - 1 = on, 0 = off.
-        M.format_topcoll.set_user_preference('topcoll_toggle_' + this.courseid, this.togglestate);
+        M.format_tabbedtopcoll.set_user_preference('topcoll_toggle_' + this.courseid, this.togglestate);
     }
 };
 
 // New base 64 code:....
-M.format_topcoll.is_old_preference = function(pref) {
+M.format_tabbedtopcoll.is_old_preference = function(pref) {
     "use strict";
     var retr = false;
     var firstchar = pref[0];
@@ -265,7 +265,7 @@ M.format_topcoll.is_old_preference = function(pref) {
     return retr;
 };
 
-M.format_topcoll.convert_to_new_preference = function() {
+M.format_tabbedtopcoll.convert_to_new_preference = function() {
     "use strict";
     var toggleBinary = this.to2baseString(this.togglestate);
     var bin, value;
@@ -293,7 +293,7 @@ M.format_topcoll.convert_to_new_preference = function() {
  * int togglenum - The toggle number.
  * boolean state - true or false.
  */
-M.format_topcoll.set_toggle_state = function(togglenum, state) {
+M.format_tabbedtopcoll.set_toggle_state = function(togglenum, state) {
     "use strict";
     var togglecharpos = this.get_toggle_pos(togglenum);
     var toggleflag = this.get_toggle_flag(togglenum, togglecharpos);
@@ -313,27 +313,27 @@ M.format_topcoll.set_toggle_state = function(togglenum, state) {
     this.togglestate = start + newchar + end;
 };
 
-M.format_topcoll.get_required_digits = function(numtoggles) {
+M.format_tabbedtopcoll.get_required_digits = function(numtoggles) {
     "use strict";
     return this.get_toggle_pos(numtoggles);
 };
 
-M.format_topcoll.get_toggle_pos = function(togglenum) {
+M.format_tabbedtopcoll.get_toggle_pos = function(togglenum) {
     "use strict";
     return Math.ceil(togglenum / 6);
 };
 
-M.format_topcoll.get_min_digit = function() {
+M.format_tabbedtopcoll.get_min_digit = function() {
     "use strict";
     return ':'; // Digit ':' is 58.
 };
 
-M.format_topcoll.get_max_digit = function() {
+M.format_tabbedtopcoll.get_max_digit = function() {
     "use strict";
     return 'y'; // Digit 'y' is 121.
 };
 
-M.format_topcoll.get_toggle_flag = function(togglenum, togglecharpos) {
+M.format_tabbedtopcoll.get_toggle_flag = function(togglenum, togglecharpos) {
     "use strict";
     var toggleflagpos = togglenum - ((togglecharpos - 1) * 6);
     var flag;
@@ -360,12 +360,12 @@ M.format_topcoll.get_toggle_flag = function(togglenum, togglecharpos) {
     return flag;
 };
 
-M.format_topcoll.decode_character_to_value = function(character) {
+M.format_tabbedtopcoll.decode_character_to_value = function(character) {
     "use strict";
     return character.charCodeAt(0) - 58;
 };
 
-M.format_topcoll.encode_value_to_character = function(val) {
+M.format_tabbedtopcoll.encode_value_to_character = function(val) {
     "use strict";
     return String.fromCharCode(val + 58);
 };
@@ -381,9 +381,9 @@ M.format_topcoll.encode_value_to_character = function(val) {
  * @param String name the name of the setting to update.
  * @param String the value to set it to.
  */
-M.format_topcoll.set_user_preference = function(name, value) {
+M.format_tabbedtopcoll.set_user_preference = function(name, value) {
     YUI().use('io', function(Y) {
-        var url = M.cfg.wwwroot + '/course/format/topcoll/settopcollpref.php?sesskey=' + M.cfg.sesskey + '&pref=' + encodeURI(name) + '&value=' + encodeURI(value); // jshint ignore:line
+        var url = M.cfg.wwwroot + '/course/format/tabbedtopcoll/settopcollpref.php?sesskey=' + M.cfg.sesskey + '&pref=' + encodeURI(name) + '&value=' + encodeURI(value); // jshint ignore:line
 
         // If we are a developer, ensure that failures are reported.
         var cfg = {
@@ -392,7 +392,7 @@ M.format_topcoll.set_user_preference = function(name, value) {
         };
         if (M.cfg.developerdebug) {
             cfg.on.failure = function() {
-                console.log("Error updating topcoll preference '" + name + "' using AJAX.  Almost certainly your session has timed out.  Clicking this link will repeat the AJAX call that failed so you can see the error: "); // jshint ignore:line
+                console.log("Error updating tabbedtopcollpreference '" + name + "' using AJAX.  Almost certainly your session has timed out.  Clicking this link will repeat the AJAX call that failed so you can see the error: "); // jshint ignore:line
             };
         }
 

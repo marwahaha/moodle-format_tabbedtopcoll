@@ -4,26 +4,26 @@ composer install --dev
 
 php admin/tool/phpunit/cli/init.php
 
-vendor/bin/phpunit format_topcoll_courseformatlib_testcase course/format/topcoll/tests/courseformatlib_test.php
+vendor/bin/phpunit format_tabbedtopcoll_courseformatlib_testcase course/format/tabbedtopcoll/tests/courseformatlib_test.php
 or
-vendor\bin\phpunit format_topcoll_courseformatlib_testcase course/format/topcoll/tests/courseformatlib_test.php
+vendor\bin\phpunit format_tabbedtopcoll_courseformatlib_testcase course/format/tabbedtopcoll/tests/courseformatlib_test.php
 
-vendor/bin/phpunit format_topcoll_courseformatrenderer_testcase course/format/topcoll/tests/courseformatrenderer_test.php
+vendor/bin/phpunit format_tabbedtopcoll_courseformatrenderer_testcase course/format/tabbedtopcoll/tests/courseformatrenderer_test.php
 or
-vendor\bin\phpunit format_topcoll_courseformatrenderer_testcase course/format/topcoll/tests/courseformatrenderer_test.php
+vendor\bin\phpunit format_tabbedtopcoll_courseformatrenderer_testcase course/format/tabbedtopcoll/tests/courseformatrenderer_test.php
 
-vendor/bin/phpunit format_topcoll_courseformattoolbox_testcase course/format/topcoll/tests/courseformattoolbox_test.php
+vendor/bin/phpunit format_tabbedtopcoll_courseformattoolbox_testcase course/format/tabbedtopcoll/tests/courseformattoolbox_test.php
 or
-vendor\bin\phpunit format_topcoll_courseformattoolbox_testcase course/format/topcoll/tests/courseformattoolbox_test.php
+vendor\bin\phpunit format_tabbedtopcoll_courseformattoolbox_testcase course/format/tabbedtopcoll/tests/courseformattoolbox_test.php
 
-vendor/bin/phpunit format_topcoll_privacy_testcase course/format/topcoll/tests/privacy_provider_test.php
+vendor/bin/phpunit format_tabbedtopcoll_privacy_testcase course/format/tabbedtopcoll/tests/privacy_provider_test.php
 or
-vendor\bin\phpunit format_topcoll_privacy_testcase course/format/topcoll/tests/privacy_provider_test.php
+vendor\bin\phpunit format_tabbedtopcoll_privacy_testcase course/format/tabbedtopcoll/tests/privacy_provider_test.php
 
-vendor/bin/phpunit format_topcoll_togglelib_testcase course/format/topcoll/tests/togglelib_test.php
+vendor/bin/phpunit format_tabbedtopcoll_togglelib_testcase course/format/tabbedtopcoll/tests/togglelib_test.php
 or
-vendor\bin\phpunit format_topcoll_togglelib_testcase course/format/topcoll/tests/togglelib_test.php
+vendor\bin\phpunit format_tabbedtopcoll_togglelib_testcase course/format/tabbedtopcoll/tests/togglelib_test.php
 
-vendor/bin/phpunit --group format_topcoll
+vendor/bin/phpunit --group format_tabbedtopcoll
 or
-vendor\bin\phpunit --group format_topcoll
+vendor\bin\phpunit --group format_tabbedtopcoll

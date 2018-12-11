@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -71,7 +71,7 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 // Make sure all sections are created.
 course_create_sections_if_missing($course, range(0, $course->numsections));
 
-$renderer = $PAGE->get_renderer('format_topcoll');
+$renderer = $PAGE->get_renderer('format_tabbedtopcoll');
 
 $devicetype = core_useragent::get_device_type(); // In /lib/classes/useragent.php.
 if ($devicetype == "mobile") {
@@ -86,7 +86,7 @@ $renderer->set_portable($portable);
 if (!empty($displaysection)) {
     $renderer->print_single_section_page($course, null, null, null, null, $displaysection);
 } else {
-    $defaulttogglepersistence = clean_param(get_config('format_topcoll', 'defaulttogglepersistence'), PARAM_INT);
+    $defaulttogglepersistence = clean_param(get_config('format_tabbedtopcoll', 'defaulttogglepersistence'), PARAM_INT);
 
     if ($defaulttogglepersistence == 1) {
         user_preference_allow_ajax_update('topcoll_toggle_' . $course->id, PARAM_RAW);
@@ -95,7 +95,7 @@ if (!empty($displaysection)) {
         $userpreference = null;
     }
 
-    $defaultuserpreference = clean_param(get_config('format_topcoll', 'defaultuserpreference'), PARAM_INT);
+    $defaultuserpreference = clean_param(get_config('format_tabbedtopcoll', 'defaultuserpreference'), PARAM_INT);
 
     $renderer->set_user_preference($userpreference, $defaultuserpreference, $defaulttogglepersistence);
 
@@ -108,7 +108,7 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle,';
     echo '.course-content ul.ctopics li.section .content.sectionhidden {';
     echo 'background-color: ';
-    echo \format_topcoll\toolbox::hex2rgba($tcsettings['togglebackgroundcolour'], $tcsettings['togglebackgroundopacity']);
+    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['togglebackgroundcolour'], $tcsettings['togglebackgroundopacity']);
     echo ';';
     echo '}';
 
@@ -116,7 +116,7 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle span, ';
     echo '.course-content ul.ctopics li.section .content.sectionhidden {';
     echo 'color: ';
-    echo \format_topcoll\toolbox::hex2rgba($tcsettings['toggleforegroundcolour'], $tcsettings['toggleforegroundopacity']);
+    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['toggleforegroundcolour'], $tcsettings['toggleforegroundopacity']);
     echo ';';
     echo 'text-align: ';
     switch ($tcsettings['togglealignment']) {
@@ -148,17 +148,17 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle span:hover,';
     echo '.course-content ul.ctopics li.section .content.sectionhidden .toggle span:hover {';
     echo 'color: ';
-    echo \format_topcoll\toolbox::hex2rgba($tcsettings['toggleforegroundhovercolour'], $tcsettings['toggleforegroundhoveropacity']);
+    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['toggleforegroundhovercolour'], $tcsettings['toggleforegroundhoveropacity']);
     echo ';';
     echo '}';
 
     echo '.course-content ul.ctopics li.section .content div.toggle:hover {';
     echo 'background-color: ';
-    echo \format_topcoll\toolbox::hex2rgba($tcsettings['togglebackgroundhovercolour'], $tcsettings['togglebackgroundhoveropacity']);
+    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['togglebackgroundhovercolour'], $tcsettings['togglebackgroundhoveropacity']);
     echo ';';
     echo '}';
 
-    $topcollsidewidth = get_string('topcollsidewidthlang', 'format_topcoll');
+    $topcollsidewidth = get_string('topcollsidewidthlang', 'format_tabbedtopcoll');
     $topcollsidewidthdelim = strpos($topcollsidewidth, '-');
     $topcollsidewidthlang = strcmp(substr($topcollsidewidth, 0, $topcollsidewidthdelim), current_language());
     $topcollsidewidthval = substr($topcollsidewidth, $topcollsidewidthdelim + 1);
@@ -191,10 +191,10 @@ if (!empty($displaysection)) {
         echo '}';
     }
     // Site wide configuration Site Administration -> Plugins -> Course formats -> Collapsed Topics.
-    $tcborderradiustl = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiustl'), PARAM_TEXT);
-    $tcborderradiustr = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiustr'), PARAM_TEXT);
-    $tcborderradiusbr = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiusbr'), PARAM_TEXT);
-    $tcborderradiusbl = clean_param(get_config('format_topcoll', 'defaulttoggleborderradiusbl'), PARAM_TEXT);
+    $tcborderradiustl = clean_param(get_config('format_tabbedtopcoll', 'defaulttoggleborderradiustl'), PARAM_TEXT);
+    $tcborderradiustr = clean_param(get_config('format_tabbedtopcoll', 'defaulttoggleborderradiustr'), PARAM_TEXT);
+    $tcborderradiusbr = clean_param(get_config('format_tabbedtopcoll', 'defaulttoggleborderradiusbr'), PARAM_TEXT);
+    $tcborderradiusbl = clean_param(get_config('format_tabbedtopcoll', 'defaulttoggleborderradiusbl'), PARAM_TEXT);
     echo '.course-content ul.ctopics li.section .content .toggle, .course-content ul.ctopics li.section .content.sectionhidden {';
     echo '-moz-border-top-left-radius: '.$tcborderradiustl.'em;';
     echo '-webkit-border-top-left-radius: '.$tcborderradiustl.'em;';
@@ -216,4 +216,4 @@ if (!empty($displaysection)) {
 }
 
 // Include course format js module.
-$PAGE->requires->js('/course/format/topcoll/format.js');
+$PAGE->requires->js('/course/format/tabbedtopcoll/format.js');

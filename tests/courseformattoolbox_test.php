@@ -18,7 +18,7 @@
  * Collapsed Topics course format.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2017-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -29,9 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Toolbox unit tests for the Collapsed Topics course format.
- * @group format_topcoll
+ * @group format_tabbedtopcoll
  */
-class format_topcoll_courseformattoolbox_testcase extends advanced_testcase {
+class format_tabbedtopcoll_courseformattoolbox_testcase extends advanced_testcase {
 
     protected function setUp() {
         $this->resetAfterTest(true);
@@ -40,7 +40,7 @@ class format_topcoll_courseformattoolbox_testcase extends advanced_testcase {
     }
 
     public function test_hex2rgba() {
-        $theoutput = \format_topcoll\toolbox::hex2rgba('ffaabb', '0.8');;
+        $theoutput = \format_tabbedtopcoll\toolbox::hex2rgba('ffaabb', '0.8');;
         $thevalue = 'rgba(255, 170, 187, 0.8)';
 
         $this->assertEquals($thevalue, $theoutput);

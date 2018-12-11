@@ -58,7 +58,7 @@ Version 3.3.0.1
   4. Apply MDL-57769.
 
 Version 3.2.1.0
-  1. Remove old 'format_topcoll_delete_course' function and replace with '\core\event\course_content_deleted' event.
+  1. Remove old 'format_tabbedtopcoll_delete_course' function and replace with '\core\event\course_content_deleted' event.
   2. Add Boost theme specific style sheet - not the best of solutions but only one at the moment I can think of.
 
 Version 3.2.0.1
@@ -91,7 +91,7 @@ Version 3.0.2.1
   2. Change edit summary to edit section on cog icon to be consistent.
   3. Fix editing side width.
   4. Change colour setting type from 'text' to 'colourtext - 'ftext' -> 'fcolourtext' for theme styling.
-  5. Fix 'Managers assigned at Course Category levels cannot change topcoll settings until course exists' - #24.
+  5. Fix 'Managers assigned at Course Category levels cannot change tabbedtopcollsettings until course exists' - #24.
   6. Implement MDL-26226 / CONTRIB-6178.
   7. TravisCI fixes.
 
@@ -110,7 +110,7 @@ Version 3.0.1
   3. Start of PHPUnit tests.
 
 Version 3.0.0.3
-  1. Fixed #18, Collapsed Topics Edit menu and MDL-42634-28, ref: https://github.com/gjb2048/moodle-format_topcoll/issues/18
+  1. Fixed #18, Collapsed Topics Edit menu and MDL-42634-28, ref: https://github.com/gjb2048/moodle-format_tabbedtopcoll/issues/18
   2. Fixed slight issue with heading colour conflict and themes.
   3. Fixed #19, Drag and drop handle does not show when editing in RTL.
   4. Apply MDL-10405.
@@ -186,7 +186,7 @@ Version 2.8.2.2
 11th December 2014 Version 2.8.1.1
   1. New 'Show section summary when collapsed' feature gratefully funded by 'Te Rito Maioha Early Childhood New Zealand - https://ecnz.ac.nz'.
   2. Fix CONTRIB-5472.
-  3. Integrated 'Use core required_param for toggle parameters.': https://github.com/gjb2048/moodle-format_topcoll/pull/12
+  3. Integrated 'Use core required_param for toggle parameters.': https://github.com/gjb2048/moodle-format_tabbedtopcoll/pull/12
      "This work was made possible through funding from Te Rito Maioha Early Childhood New Zealand".
      Improves on work instigated in CONTRIB-5211 and related to MDL-46754.
   4. Improved HTTP protocol handling in 'settopcollpref.php'.
@@ -204,7 +204,7 @@ Version 2.8.2.2
   4. Added the ability to set each corner of the toggle border radius site wide between 0.0 and 4.0em in increments of 0.1.
 
 19th August 2014 Version 2.7.1.4
-  1. Fixed issue #11: Moodle notice - https://github.com/gjb2048/moodle-format_topcoll/issues/11.
+  1. Fixed issue #11: Moodle notice - https://github.com/gjb2048/moodle-format_tabbedtopcoll/issues/11.
 
 18th August 2014 Version 2.7.1.3
   1. Fixed a few typos.
@@ -256,8 +256,8 @@ Version 2.8.2.2
      validation method 'edit_form_validation' in 'lib.php' was failing the values passed to it.  These happened to be the
      hidden label values from 'course_format_options' which were being used because the 'Course creator' role that teachers
      have before becoming an 'editingteacher' role as defined in 'db/access.php' does not allow the teacher to have the
-     the 'format/topcoll:changelayout', 'format/topcoll:changecolour', 'format/topcoll:changetogglealignment' and
-     'format/topcoll:changetoggleiconset' capabilities.  This also implies that the values of the other settings are wrong,
+     the 'format/tabbedtopcoll:changelayout', 'format/tabbedtopcoll:changecolour', 'format/tabbedtopcoll:changetogglealignment' and
+     'format/tabbedtopcoll:changetoggleiconset' capabilities.  This also implies that the values of the other settings are wrong,
      which in fact they are, causing courses to be created (after fixing the colour settings for 'edit_form_validation') with
      odd values and not the defaults resulting in no icon set etc.  And therefore needing to go back to edit the course settings.
 
@@ -290,7 +290,7 @@ Change by G J Barnard
 24th October 2013 Version 2.5.3.4
   1. Fixed reset toggle instructions not working when only thing reset.
   2. Fixed reset logic as was updating course format options when should not have done even though there would have been no effect.
-  3. Slight optimisation to 'renderer.php' for getting 'format_topcoll' object when already have it.
+  3. Slight optimisation to 'renderer.php' for getting 'format_tabbedtopcoll' object when already have it.
   4. Slight optimisation to getting the strings for the current section 'light bulb'.
 
 2nd October 2013 Version 2.5.3.3
@@ -375,7 +375,7 @@ Change by G J Barnard
 
 27th April 2013 - Version 2.5.0.2 - Beta
   1. Thanks to ideas from Ben Kelada and help from Andrew Nicols / Tim Hunt, I have made the event handing toggle functions more efficient.
-  2. Fixed an obscure bug with '$defaultuserpreference' in 'format.php' not being parsed to 'M.format_topcoll.init' in 'module.js'.
+  2. Fixed an obscure bug with '$defaultuserpreference' in 'format.php' not being parsed to 'M.format_tabbedtopcoll.init' in 'module.js'.
   3. Removed '.jumpmenu' from styles.css because of MDL-38907.
   4. Please perform a 'Purge all caches' under 'Home -> Site administration -> Development -> Purge all caches' when upgrading.
 
@@ -418,8 +418,8 @@ Change by G J Barnard
   4. Added the ability to control if the toggle all icons will change when hovered over, for Rick Jerz.
   5. Moved all 'tcconfig.php' default functionalty to 'Site Administration -> Plugins -> Course formats -> Collapsed Topics'
      so that defaults can be changed by the administrator from within Moodle without resorting to code changes.
-  6. Added capabilities 'format/topcoll:changelayout', 'format/topcoll:changecolour', 'format/topcoll:changetogglealignment'
-     and 'format/topcoll:changetoggleiconset' to editing teachers and managers such that site administrators can choose to
+  6. Added capabilities 'format/tabbedtopcoll:changelayout', 'format/tabbedtopcoll:changecolour', 'format/tabbedtopcoll:changetogglealignment'
+     and 'format/tabbedtopcoll:changetoggleiconset' to editing teachers and managers such that site administrators can choose to
      disable functionality through roles if they wish.  In order for this to work the version number must be updated.
   7. Code cleaned with ['code-checker'](https://moodle.org/plugins/view.php?plugin=local_codechecker) - not finished yet
      - no functional changes.
@@ -589,7 +589,7 @@ Change by G J Barnard
   8. Implemented MDL-34917 which I reported as an improvement.  Code is slightly different, feedback appreciated.
   9. Make toggle titles bold and change 'all toggles' to 'all sections', from comments made on MDL-35048.
  10. Cherry picked Luiggi's change
-     https://github.com/luiggisanso/moodle-format_topcoll/commit/9bd818f5a4efb347aef4f5154ea2930526552bfc
+     https://github.com/luiggisanso/moodle-format_tabbedtopcoll/commit/9bd818f5a4efb347aef4f5154ea2930526552bfc
  11. Figured out how to use 'pix:' for URL's in css for the format, so have changed so that the images are now controlled by css classes.  This
      means that it is now possible to override them in your theme in css.  The following is the selectors for the various images, override
      the 'background' attribute:
@@ -611,9 +611,9 @@ Change by G J Barnard
   2. Tidied up some of the logic in 'renderer.php'.
   3. Made 'format.php' more adaptable to old style section 'x' only urls.
   4. Made inclusion of 'config.php' in 'lib.php' more precise.
-  5. Removed 'callback_topcoll_get_section_url' in 'lib.php' because it is no longer required by
+  5. Removed 'callback_tabbedtopcoll_get_section_url' in 'lib.php' because it is no longer required by
      'load_generic_course_sections' in '/lib/navigationlib.php'.
-  6. Added 'currentsection' string to '/lang/en/format_topcoll.php' - thanks to [Carlos Kiyan Tsunami](http://moodle.org/mod/forum/discuss.php?d=208066).
+  6. Added 'currentsection' string to '/lang/en/format_tabbedtopcoll.php' - thanks to [Carlos Kiyan Tsunami](http://moodle.org/mod/forum/discuss.php?d=208066).
   7. Shrunk the settings icon to 75% of the original size so that it is not so 'in your face' and added
      instructions on the left.  The instructions are in the 'en' langauge file as the 'formatsettingsinformation'
      string for translation.
@@ -693,13 +693,13 @@ Change by G J Barnard
   2. Updated French translation thanks to Luiggi Sansonetti.
 
 1st May 2012 - Version 2.3.6 - CONTRIB-3624
-  1. Implemented code to facilitate the ability to confirm with the user that it is ok to place the cookie 'mdl_cf_topcoll' on
+  1. Implemented code to facilitate the ability to confirm with the user that it is ok to place the cookie 'mdl_cf_tabbedtopcoll' on
      their computer.  This fucntionality can be switched on / off through the changing of `$TCCFG->defaultcookieconsent` in the
      format's 'config.php'.  This functionality exists because I believe that the cookie is a 'Category 3' cookie in line with
      the forthcoming UK EU Cookie Law - please see 'UK / EU Cookie Law' at the top of this file.
   2. Fixed - Changing the language on the 'Settings' form produces an invalid Moodle URL.
   3. Fixed - Toggles are open and sections displayed when JavaScript is turned off in the user's browser.
-  4. A few fixes to changes made in version 2.2.5 where I had renamed table 'format_topcoll_layout' to 'format_topcoll_settings'
+  4. A few fixes to changes made in version 2.2.5 where I had renamed table 'format_tabbedtopcoll_layout' to 'format_tabbedtopcoll_settings'
      in the code.
   5. Created a `$TCCFG` object in the 'config.php' file to solve the 'globals' issue in 'lib.php'.
 
@@ -711,7 +711,7 @@ Change by G J Barnard
       'https://github.com/drcheckers/moodle-block_quickstructure/tree/master/blocks/quickstructure', and to 'Matthew Cannings'
       on MDL-23320 for the colour validation rule.
    4. Moved JavaScript code into its own folder 'js' for neatness.
-   5. Renamed 'format_topcoll_layout' table to 'format_topcoll_settings' so that it is a better representation of what it
+   5. Renamed 'format_tabbedtopcoll_layout' table to 'format_tabbedtopcoll_settings' so that it is a better representation of what it
       stores.  Restores from previous versions should work.  Raised MDL-32650 as cannot rename the comment for the renamed
       table in upgrading installations.
    6. Added an American English translation (en_us) because of the incorporation of the word 'colour'.  More information on
@@ -726,7 +726,7 @@ Change by G J Barnard
       code of 'section_classes.js' and overloading does not seem to work.
 
 21st March 2012 - Version 2.3.4.2
-  1. Received an updated version of 'format_topcoll.php' from Luiggi Sansonetti for the French translation - Merci :).
+  1. Received an updated version of 'format_tabbedtopcoll.php' from Luiggi Sansonetti for the French translation - Merci :).
 
 17th March 2012 - Version 2.3.4.1
   1. Tried with restorelib.php in the root folder for importing Moodle 1.9 courses and did not work.  So for tidiness, moved the
@@ -735,11 +735,11 @@ Change by G J Barnard
      default to the values in 'config.php'.  I hope to investigate and either fix or have this fixed.
   3. Release '2012030100.02' of Moodle 2.3dev converted all tables to have signed integers in the function
      'upgrade_mysql_fix_unsigned_columns()' in '/lib/db/upgradelib.php' called from 'upgrade.php' in the same folder.  This
-     included 'format_topcoll_layout' because of the code was written.  This made it very difficult for me to create an
+     included 'format_tabbedtopcoll_layout' because of the code was written.  This made it very difficult for me to create an
      effective upgrade in my own 'upgrade.php' because I would be converting what had already been converted if the format was
      installed and you were updating Moodle 2.3dev but if you install for the first time, the code has been written as such to
      have signed fields.  Therefore if you have previously installed this format for Moodle 2.3, please remove the table
-     'format_topcoll_layout' from your database before upgrading.  This is not quite brilliant, but I consider reasonable for
+     'format_tabbedtopcoll_layout' from your database before upgrading.  This is not quite brilliant, but I consider reasonable for
      this development version at this stage.
   4. Implemented the change in 'format.php' introduced by MDL-31255, therefore you now require Moodle 2.3 version
      '2012031500.00'.
@@ -755,7 +755,7 @@ Change by G J Barnard
 14th March 2012 - Version 2.3.4 - BETA - CONTRIB-3520.
   1. Added backup and restore functionality.  If required when restoring a course 'Overwrite course configuration' needs to be
      'Yes' to set the structure and elements correctly.
-  2. Added the function 'format_topcoll_delete_course' in 'lib.php' which will remove the entry in the 'format_topcoll_layout'
+  2. Added the function 'format_tabbedtopcoll_delete_course' in 'lib.php' which will remove the entry in the 'format_tabbedtopcoll_layout'
      table for the course when it is deleted.
   3. Added language strings to the language files that were missing previous changes.  Still in English at the moment in the
      hope a native speaker will translate them for me.  I intend to translate the basics like 'Topic' and 'Week' though before
@@ -775,7 +775,7 @@ Change by G J Barnard
 
 1st March 2012 - Version 2.3.3 - Stable
   1. Integrated Git Branch CONTRIB-3378 into stable branch master.
-  2. NOTE: If you have previously installed a Beta or Release Candidate please drop the table 'format_topcoll_layout' before use.
+  2. NOTE: If you have previously installed a Beta or Release Candidate please drop the table 'format_tabbedtopcoll_layout' before use.
   3. Removed redundant lib.js and lib_min.js in this branch.
 
 28th February 2012 - Version 2.3.3 - Release Candidate 3
@@ -798,7 +798,7 @@ Change by G J Barnard
   5. Topic structure now opens current section by default in the same way as the weekly ones.
   6. Changed name of 'Latest First' to 'Latest Week First' to be clearer.
 
-NOTE: If uninstallation fails, drop the table 'format_topcoll_layout' and the entry for 'format_topcoll' in the table
+NOTE: If uninstallation fails, drop the table 'format_tabbedtopcoll_layout' and the entry for 'format_tabbedtopcoll' in the table
       'config_plugins' where tables are with the prefix you use, the default being 'mdl_'.  Then delete the installation folder
       and replace with the current stable version.
 
@@ -806,16 +806,16 @@ NOTE: If uninstallation fails, drop the table 'format_topcoll_layout' and the en
   1. Added help information to the drop down options on the set layout form.
   2. Tidied up to be consistent and use less words where required.
   3. In format.php changed from depreciated `js_function_call()` to `js_init_call()`.
-  4. If you have previously installed a beta version you will need to drop the table 'format_topcoll_layout' in the database.
+  4. If you have previously installed a beta version you will need to drop the table 'format_tabbedtopcoll_layout' in the database.
   5. If you are a native speaker of a language other than English, I would be grateful of a translation of the new language
-     strings in 'lang/en/format_topcoll.php' under the comment 'Layout enhancement - Moodle Tracker CONTRIB-3378'.  Please
+     strings in 'lang/en/format_tabbedtopcoll.php' under the comment 'Layout enhancement - Moodle Tracker CONTRIB-3378'.  Please
      message me using the details in my Moodle profile 'http://moodle.org/user/profile.php?id=442195'.
 
 18th February 2012 - Version 2.3.3 - BETA 8
   1. CONTRIB-3225 - Added screen reader capability using 'h3' tags, the same as the standard Topics format.
 
 15th February 2012 - Version 2.3.3 - BETA 7
-  1. Added strings for MDL-26105 in format_topcoll.php.
+  1. Added strings for MDL-26105 in format_tabbedtopcoll.php.
   2. Used non-depreciated 'create_table' method in 'upgrade.php'.
   3. Finally worked out how to ensure that the 'Settings Block' displays the course and not front page administration by using
      `require_login($course)`.
@@ -825,13 +825,13 @@ NOTE: If uninstallation fails, drop the table 'format_topcoll_layout' and the en
      sections is reduced, you go back to the course with a section number for you in the database that no longer exists and the
      'Jump to...' drop down box does not work.  Leading to having to change the database or the value of 'ctopics' in the URL to
      that of a valid one.
-  2. Added 'callback_topcoll_get_section_url' in 'lib.php' for MDL-26477.
+  2. Added 'callback_tabbedtopcoll_get_section_url' in 'lib.php' for MDL-26477.
   3. Corrected slight mistake with version number.
 
 11th February 2012 - Version 2.3.3 - BETA 5
   1. Implemented the capability to have different 'structures' thereby encapsulating the 'Collapsed Weeks' and 'Latest First'
      formats into this one.
-  2. If you have previously installed this development, you need to drop the table 'format_topcoll_layout' in your database to
+  2. If you have previously installed this development, you need to drop the table 'format_tabbedtopcoll_layout' in your database to
      upgrade as I do not wish to have a complicated upgrade.php in the db folder at this stage whilst development continues.
   3. As a consequence of some changes, the Spanish translation now needs fixing, sorry Carlos.
 

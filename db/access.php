@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in below.
  * @copyright  &copy; 2012-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
@@ -36,7 +36,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'format/topcoll:changelayout' => array(
+    'format/tabbedtopcoll:changelayout' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -45,7 +45,7 @@ $capabilities = array(
         )
     ),
 
-    'format/topcoll:changecolour' => array(
+    'format/tabbedtopcoll:changecolour' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -54,7 +54,7 @@ $capabilities = array(
         )
     ),
 
-    'format/topcoll:changetogglealignment' => array(
+    'format/tabbedtopcoll:changetogglealignment' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -63,7 +63,7 @@ $capabilities = array(
         )
     ),
 
-    'format/topcoll:changetoggleiconset' => array(
+    'format/tabbedtopcoll:changetoggleiconset' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(

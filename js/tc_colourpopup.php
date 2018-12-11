@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in below.
  * @copyright  &copy; 2012-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - gjbarnard at gmail dot com and {@link http://moodle.org/user/profile.php?id=442195}
@@ -67,7 +67,7 @@ class MoodleQuickForm_tccolourpopup extends HTML_QuickForm_text implements templ
     public function toHtml() {
         global $PAGE;
         $id = $this->getAttribute('id');
-        $PAGE->requires->js('/course/format/topcoll/js/tc_colourpopup.js');
+        $PAGE->requires->js('/course/format/tabbedtopcoll/js/tc_colourpopup.js');
         $PAGE->requires->js_init_call('M.util.init_tccolour_popup', array($id));
         $colour = $this->getValue();
         if ((!empty($colour)) && ($colour[0] == '#')) {

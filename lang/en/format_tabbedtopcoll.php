@@ -23,7 +23,7 @@
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.md' file.
  *
  * @package    course/format
- * @subpackage topcoll
+ * @subpackage tabbedtopcoll
  * @version    See the value of '$plugin->version' in version.php.
  * @copyright  &copy; 2009-onwards G J Barnard in respect to modifications of standard topics format.
  * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
@@ -33,8 +33,8 @@
  */
 // Used by the Moodle Core for identifing the format and displaying in the list of formats for a course in its settings.
 // Possibly legacy to be removed after Moodle 2.0 is stable.
-$string['nametopcoll'] = 'Collapsed Topics';
-$string['formattopcoll'] = 'Collapsed Topics';
+$string['nametopcoll'] = 'Collapsed Tabbed Topics';
+$string['formattopcoll'] = 'Collapsed Tabbed Topics';
 
 // Used in format.php.
 $string['topcolltoggle'] = 'Toggle';
@@ -47,12 +47,12 @@ $string['topcollclosed'] = 'Close all';
 
 // Moodle 2.0 Enhancement - Moodle Tracker MDL-15252, MDL-21693 & MDL-22056 - http://docs.moodle.org/en/Development:Languages.
 $string['sectionname'] = 'Section';
-$string['pluginname'] = 'Collapsed Topics';
+$string['pluginname'] = 'Collapsed Tabbed Topics';
 $string['section0name'] = 'General';
 
 // MDL-26105.
-$string['page-course-view-topcoll'] = 'Any course main page in the collapsed topics format';
-$string['page-course-view-topcoll-x'] = 'Any course page in the collapsed topics format';
+$string['page-course-view-tabbedtopcoll'] = 'Any course main page in the collapsed tabbed topics format';
+$string['page-course-view-tabbedtopcoll-x'] = 'Any course page in the collapsed tabbed topics format';
 
 $string['addsection'] = 'Add section';
 $string['hidefromothers'] = 'Hide section';
