@@ -216,4 +216,4 @@ if (!empty($displaysection)) {
 }
 
 // Include course format js module.
-$PAGE->requires->js('/course/format/tabbedtopcoll/format.js');
+$PAGE->requires->js('/course/format/topcoll/format.js');
