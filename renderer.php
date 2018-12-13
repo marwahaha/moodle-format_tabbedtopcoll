@@ -791,12 +791,14 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         // General section if non-empty.
         $thissection = $sections[0];
         unset($sections[0]);
-        if ($thissection->summary or ! empty($modinfo->sections[0]) or $this->userisediting) {
+        echo html_writer::start_tag('div', array('id' => 'inline_area'));
+        if (!$format_options['section0_ontop'] and ($thissection->summary or ! empty($modinfo->sections[0]) or $this->userisediting)) {
             echo $this->section_header($thissection, $course, false, 0);
             echo $this->courserenderer->course_section_cm_list($course, $thissection, 0);
             echo $this->courserenderer->course_section_add_cm_control($course, $thissection->section, 0);
             echo $this->section_footer();
         }
+        echo html_writer::end_tag('div');
 
         $shownonetoggle = false;
         $coursenumsections = $this->courseformat->get_last_section_number();
