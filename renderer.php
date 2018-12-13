@@ -310,8 +310,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
             }
 
             if ($this->userisediting && has_capability('moodle/course:update', $context)) {
-                // show a spacer
-                $o .= '<br>';
                 // again no cog wheel as edit now is part of the drop down menu
 //                $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
 //                $o .= html_writer::link($url,

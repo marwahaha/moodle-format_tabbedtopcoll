@@ -34,8 +34,9 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2018052302;
+$plugin->version = 2018121300;
 $plugin->maturity = MATURITY_BETA;
 $plugin->requires  = 2018051700.00; // 3.5 (Build: 20180517).
 $plugin->component = 'format_tabbedtopcoll';
 $plugin->release = '3.5.0.3';
+$plugin->dependencies = array('format_topcoll' => 2016110101);

@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Collapsed Topics Information
+ * Tabbed Collapsed Topics Information
  *
- * A topic based format that solves the issue of the 'Scroll of Death' when a course has many topics. All topics
+ * A tabbed topic based format that solves the issue of the 'Scroll of Death' when a course has many topics even better.
+ * All topics may be assigned to one of 5 available tabs. Clicking a tab will show only topics assigned to it.All topics
  * except zero have a toggle that displays that topic. One or more topics can be displayed at any given time.
  * Toggles are persistent on a per browser session per course basis but can be made to persist longer by a small
  * code change. Full installation instructions, code adaptions and credits are included in the 'Readme.txt' file.
@@ -108,7 +109,7 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle,';
     echo '.course-content ul.ctopics li.section .content.sectionhidden {';
     echo 'background-color: ';
-    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['togglebackgroundcolour'], $tcsettings['togglebackgroundopacity']);
+    echo \format_topcoll\toolbox::hex2rgba($tcsettings['togglebackgroundcolour'], $tcsettings['togglebackgroundopacity']);
     echo ';';
     echo '}';
 
@@ -116,7 +117,7 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle span, ';
     echo '.course-content ul.ctopics li.section .content.sectionhidden {';
     echo 'color: ';
-    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['toggleforegroundcolour'], $tcsettings['toggleforegroundopacity']);
+    echo \format_topcoll\toolbox::hex2rgba($tcsettings['toggleforegroundcolour'], $tcsettings['toggleforegroundopacity']);
     echo ';';
     echo 'text-align: ';
     switch ($tcsettings['togglealignment']) {
@@ -148,13 +149,13 @@ if (!empty($displaysection)) {
     echo '.course-content ul.ctopics li.section .content .toggle span:hover,';
     echo '.course-content ul.ctopics li.section .content.sectionhidden .toggle span:hover {';
     echo 'color: ';
-    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['toggleforegroundhovercolour'], $tcsettings['toggleforegroundhoveropacity']);
+    echo \format_topcoll\toolbox::hex2rgba($tcsettings['toggleforegroundhovercolour'], $tcsettings['toggleforegroundhoveropacity']);
     echo ';';
     echo '}';
 
     echo '.course-content ul.ctopics li.section .content div.toggle:hover {';
     echo 'background-color: ';
-    echo \format_tabbedtopcoll\toolbox::hex2rgba($tcsettings['togglebackgroundhovercolour'], $tcsettings['togglebackgroundhoveropacity']);
+    echo \format_topcoll\toolbox::hex2rgba($tcsettings['togglebackgroundhovercolour'], $tcsettings['togglebackgroundhoveropacity']);
     echo ';';
     echo '}';
 
