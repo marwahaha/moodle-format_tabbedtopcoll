@@ -144,6 +144,22 @@ define(['jquery', 'jqueryui'], function($) {
                 if (visibleSections < 1) {
                     // X console.log('tab with no visible sections - hiding it');
                     $(this).parent().hide();
+
+                    // restoring generic tab name
+                    var courseid = $('#courseid').attr('courseid');
+                    var tabnr = $(this).attr('id').substring(3);
+                    $.ajax({
+                        url: "format/tabbedtopcoll/ajax/update_tab_name.php",
+                        type: "POST",
+                        data: {'courseid': courseid, 'tabid': tabid, 'tab_name': 'Tab '+tabnr},
+                        success: function(result) {
+                            if(result !== '') {
+                                console.log('Reset name of tab ID ' + tabid + ' to "' + result + '"');
+                                $('[data-itemid=' + result + ']').attr('data-value', 'Tab ' +
+                                    tabnr).find('.quickeditlink').html('Tab ' + tabnr);
+                            }
+                        }
+                    });
                 } else {
                     // X console.log('tab with visible sections - showing it');
                     $(this).parent().show();
@@ -303,7 +319,9 @@ define(['jquery', 'jqueryui'], function($) {
                         var tabnr = $(this).attr('tabnr');
                         // X var tabtext = $(this).find('.menu-action-text').html();
                         // X console.log(tabnr + ' --> ' + tabtext + ' ==> ' + tabArray[tabnr]);
-                        $(this).find('.menu-action-text').html('To Tab "' + tabArray[tabnr] + '"');
+//                        $(this).find('.menu-action-text').html('To Tab "' + tabArray[tabnr] + '"');
+                        $(this).find('.menu-action-text').html('To Tab "' + tabArray[tabnr] +
+                            ( (tabArray[tabnr] === 'Tab ' + tabnr || tabnr === '0') ? '"' : '" (Tab ' + tabnr + ')'));
                     });
 
                     if (sectionid === 'section-0') {
