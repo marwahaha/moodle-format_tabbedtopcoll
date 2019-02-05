@@ -49,7 +49,8 @@ class format_tabbedtopcoll extends format_topcoll {
      */
     public function course_format_options($foreditform = false) {
         global $CFG;
-        $max_tabs = (isset($CFG->max_tabs) ? $CFG->max_tabs : 5);
+//        $max_tabs = (isset($CFG->max_tabs) ? $CFG->max_tabs : 5);
+        $max_tabs = 9; // Currently there is a maximum of 9 tabs!
         static $courseformatoptions = false;
         $courseconfig = null;
 
@@ -84,6 +85,11 @@ class format_tabbedtopcoll extends format_topcoll {
                     WHERE course = ?', array($courseid));
             }
             $courseformatoptions = array(
+                'maxtabs' => array(
+                    'default' => (isset($CFG->max_tabs) ? $CFG->max_tabs : 5),
+                    'type' => PARAM_INT,
+                    'element_type' => 'hidden',
+                ),
                 'numsections' => array(
                     'default' => $defaultnumsections,
                     'type' => PARAM_INT,
@@ -542,90 +548,6 @@ class format_tabbedtopcoll extends format_topcoll {
         }
         return $courseformatoptions;
     }
-    public function course_format_options1($foreditform = false) {
-        global $CFG;
-        $max_tabs = (isset($CFG->max_tabs) ? $CFG->max_tabs : 5);
-        static $courseformatoptions = false;
-        if ($courseformatoptions === false) {
-            $courseconfig = get_config('moodlecourse');
-            $courseformatoptions = array(
-                'hiddensections' => array(
-                    'default' => $courseconfig->hiddensections,
-                    'type' => PARAM_INT,
-                ),
-                'coursedisplay' => array(
-                    'default' => $courseconfig->coursedisplay,
-                    'type' => PARAM_INT,
-                ),
-                'section0_ontop' => array(
-                    'default' => false,
-                    'type' => PARAM_BOOL,
-                    'label' => '',
-                ),
-
-                'single_section_tabs' => array(
-                    'default' => get_config('format_tabbedtopcoll', 'defaultsectionnameastabname'),
-                    'type' => PARAM_BOOL
-                ),
-            );
-
-            // the sequence in which the tabs will be displayed
-            $courseformatoptions['tab_seq'] = array('default' => '','type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-
-            // now loop through the tabs but don't show them as we only need the DB records...
-            $courseformatoptions['tab0_title'] = array('default' => get_string('tabzero_title', 'format_tabbedtopcoll'),'type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-            $courseformatoptions['tab0'] = array('default' => "",'type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-            for ($i = 1; $i <= $max_tabs; $i++) {
-                $courseformatoptions['tab'.$i.'_title'] = array('default' => "Tab ".$i,'type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-                $courseformatoptions['tab'.$i] = array('default' => "",'type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-                $courseformatoptions['tab'.$i.'_sectionnums'] = array('default' => "",'type' => PARAM_TEXT,'label' => '','element_type' => 'hidden',);
-            }
-
-        }
-        if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
-            $courseformatoptionsedit = array(
-                'hiddensections' => array(
-                    'label' => new lang_string('hiddensections'),
-                    'help' => 'hiddensections',
-                    'help_component' => 'moodle',
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            0 => new lang_string('hiddensectionscollapsed'),
-                            1 => new lang_string('hiddensectionsinvisible')
-                        )
-                    ),
-                ),
-                'coursedisplay' => array(
-                    'label' => new lang_string('coursedisplay'),
-                    'element_type' => 'select',
-                    'element_attributes' => array(
-                        array(
-                            COURSE_DISPLAY_SINGLEPAGE => new lang_string('coursedisplay_single'),
-                            COURSE_DISPLAY_MULTIPAGE => new lang_string('coursedisplay_multi')
-                        )
-                    ),
-                    'help' => 'coursedisplay',
-                    'help_component' => 'moodle',
-                ),
-                'section0_ontop' => array(
-                    'label' => get_string('section0_label', 'format_tabbedtopcoll'),
-                    'element_type' => 'advcheckbox',
-                    'help' => 'section0',
-                    'help_component' => 'format_tabbedtopcoll',
-                    'element_type' => 'hidden',
-                ),
-                'single_section_tabs' => array(
-                    'label' => get_string('single_section_tabs_label', 'format_tabbedtopcoll'),
-                    'element_type' => 'advcheckbox',
-                    'help' => 'single_section_tabs',
-                    'help_component' => 'format_tabbedtopcoll',
-                ),
-            );
-            $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
-        }
-        return $courseformatoptions;
-    }
 
     /**
      * Updates format options for a course
@@ -864,7 +786,8 @@ class format_tabbedtopcoll extends format_topcoll {
         global $CFG;
         global $DB;
 
-        $max_tabs = (isset($CFG->max_tabs) ? $CFG->max_tabs : 5);
+//        $max_tabs = (isset($CFG->max_tabs) ? $CFG->max_tabs : 5);
+        $max_tabs = 9;
 
         for($i = 0; $i <= $max_tabs; $i++) {
             if(strstr($settings['tab'.$i], $section2remove->id) > -1) {

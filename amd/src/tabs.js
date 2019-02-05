@@ -339,6 +339,9 @@ define(['jquery', 'jqueryui'], function($) {
                         $('#' + sectionid + ' .tab_mover[tabnr="' + tabnum+'"]').hide(); // Then hide the one not needed
                         // X console.log('hiding tab ' + tabnum + ' from edit menu for section '+sectionid);
                     }
+                    if( $('.tablink:visible').length === 0) {
+                        $('#' + sectionid + ' .tab_mover[tabnr="0"]').hide();
+                    }
                 }
             });};
 
