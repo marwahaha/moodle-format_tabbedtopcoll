@@ -833,6 +833,21 @@ class format_tabbedtopcoll extends format_topcoll {
             return context_course::instance($this->courseid);
         }
     }
+
+
+
+    /**
+     * Updates the number of columns when the renderer detects that they are wrong.
+     * @param int $layoutcolumns The layout columns to use, see tcconfig.php.
+     */
+    public function update_tabbedtopcoll_columns_setting($layoutcolumns) {
+        // Create data array.
+        $data = array('layoutcolumns' => $layoutcolumns);
+
+        $this->update_course_format_options($data);
+    }
+
+
 }
 
 /**

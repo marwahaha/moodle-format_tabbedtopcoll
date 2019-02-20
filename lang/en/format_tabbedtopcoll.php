@@ -45,6 +45,7 @@ $string['addsections'] = 'Add Topics';
 
 // tab related strings
 $string['modulecontent'] = 'Module Content';
+$string['tab0_generic_name'] = 'Module Content';
 
 $string['section0_label'] = 'Show Topic 0 above all tabs';
 $string['section0_help'] = 'When checked topic 0 is always shown above the tabs.';
