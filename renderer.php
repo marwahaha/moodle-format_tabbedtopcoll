@@ -600,65 +600,9 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         $this->tabs = $tabs;
         return $tabs;
     }
-    public function prepare_tabs0($course, $format_options, $sections) {
-        global $CFG, $DB, $PAGE;
-
-        // prepare a maximum of 10 user tabs (0..9)
-        $max_tabs = 9;
-        $tabs = array();
-
-        // preparing the tabs
-        $count_tabs = 0;
-        for ($i = 0; $i <= $max_tabs; $i++) {
-            $tab_sections = str_replace(' ', '', $format_options['tab' . $i]);
-            $tab_section_nums = str_replace(' ', '', $format_options['tab' . $i. '_sectionnums']);
-
-            // check section IDs and section numbers for tabs other than tab0
-            if($i > 0) {
-                $section_ids = explode(',', $tab_sections);
-                $section_nums = explode(',', $tab_section_nums);
-                $tab_sections = $this->check_section_ids($course->id, $sections, $section_ids, $section_nums, $tab_sections, $tab_section_nums,$i);
-            }
-
-            $tab = new stdClass();
-            $tab->id = "tab" . $i;
-            $tab->name = "tab" . $i;
-            $tab->title = $format_options['tab' . $i . '_title'];
-            $tab->sections = $tab_sections;
-            $tab->section_nums = $tab_section_nums;
-            $tabs[$tab->id] = $tab;
-            if ($tab_sections != null) {
-                $count_tabs++;
-            }
-        }
-        return array('tabs' => $tabs, 'count_tabs' => $count_tabs);
-    }
 
     // Render the tabs in sequence order if present or ascending otherwise
     public function render_tabs($format_options) {
-        $o = html_writer::start_tag('ul', array('class'=>'tabs nav nav-tabs row'));
-
-        $tab_seq = array();
-        if ($format_options['tab_seq']) {
-            $tab_seq = explode(',',$format_options['tab_seq']);
-        }
-
-        // if a tab sequence is equal to the number of tabs is found use it to arrange the tabs otherwise show them in default order
-        if(sizeof($tab_seq) == sizeof($this->tabs)) {
-            foreach ($tab_seq as $tabid) {
-                $tab = $this->tabs[$tabid];
-                $o .= $this->render_tab($tab);
-            }
-        } else {
-            foreach ($this->tabs as $tab) {
-                $o .= $this->render_tab($tab);
-            }
-        }
-        $o .= html_writer::end_tag('ul');
-
-        return $o;
-    }
-    public function render_tabs0($format_options) {
         $o = html_writer::start_tag('ul', array('class'=>'tabs nav nav-tabs row'));
 
         $tab_seq = array();
@@ -746,53 +690,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         $o .= html_writer::end_tag('li');
         return $o;
     }
-    public function render_tab0($tab) {
-        global $DB, $PAGE, $OUTPUT;
-        if($tab->sections == '') {
-            echo html_writer::start_tag('li', array('class'=>'tabitem nav-item', 'style' => 'display:none;'));
-        } else {
-            echo html_writer::start_tag('li', array('class'=>'tabitem nav-item'));
-        }
-
-        $sections_array = explode(',', str_replace(' ', '', $tab->sections));
-        if($sections_array[0]) {
-            while ($sections_array[0] == "0") { // remove any occurences of section-0
-                array_shift($sections_array);
-            }
-        }
-
-        if($PAGE->user_is_editing()) {
-            // get the format option record for the given tab - we need the id
-            // if the record does not exist, create it first
-            if(!$DB->record_exists('course_format_options', array('courseid' => $PAGE->course->id, 'name' => $tab->id.'_title'))) {
-                $record = new stdClass();
-                $record->courseid = $PAGE->course->id;
-                $record->format = 'tabbedtopcoll';
-                $record->section = 0;
-                $record->name = $tab->id.'_title';
-                $record->value = ($tab->id == 'tab0' ? get_string('tabzero_title', 'format_tabbedtopcoll') :'Tab '.substr($tab->id,3));
-                $DB->insert_record('course_format_options', $record);
-            }
-
-            $format_option_tab = $DB->get_record('course_format_options', array('courseid' => $PAGE->course->id, 'name' => $tab->id.'_title'));
-            $itemid = $format_option_tab->id;
-        } else {
-            $itemid = false;
-        }
-
-        if ($tab->id == 'tab0') {
-            echo '<span data-toggle="tab" id="'.$tab->id.'" sections="'.$tab->sections.'" section_nums="'.$tab->section_nums.'" class="tablink nav-link " tab_title="'.$tab->title.'">';
-        } else {
-            echo '<span data-toggle="tab" id="'.$tab->id.'" sections="'.$tab->sections.'" section_nums="'.$tab->section_nums.'" class="tablink topictab nav-link " tab_title="'.$tab->title.'" style="'.($PAGE->user_is_editing() ? 'cursor: move;' : '').'">';
-        }
-        // render the tab name as inplace_editable
-        $tmpl = new \core\output\inplace_editable('format_tabbedtopcoll', 'tabname', $itemid,
-            $PAGE->user_is_editing(),
-            format_string($tab->title), $tab->title, get_string('tabtitle_edithint', 'format_tabbedtopcoll'),  get_string('tabtitle_editlabel', 'format_tabbedtopcoll', format_string($tab->title)));
-        echo $OUTPUT->render($tmpl);
-        echo "</span>";
-        echo html_writer::end_tag('li');
-    }
 
     /**
      * Generate the starting container html for a list of sections.
@@ -803,13 +700,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
             return html_writer::start_tag('ul', array('class' => 'topics bsnewgrid'));
         } else {
             return html_writer::start_tag('ul', array('class' => 'topics'));
-        }
-    }
-    protected function start_section_list0() {
-        if ($this->bsnewgrid) {
-            return html_writer::start_tag('ul', array('class' => 'ctopics bsnewgrid'));
-        } else {
-            return html_writer::start_tag('ul', array('class' => 'ctopics'));
         }
     }
 
@@ -1077,8 +967,11 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
 
         $shownonetoggle = false;
         $coursenumsections = $this->courseformat->get_last_section_number();
+
         if ($coursenumsections > 0) {
             $sectiondisplayarray = array();
+            $numsections = $coursenumsections; // Because we want to manipulate this for column breakpoints.
+
             if ($coursenumsections > 1) {
                 if (($this->userisediting) || ($this->tcsettings['onesection'] == 1)) {
                     // Collapsed Topics all toggles.
@@ -1090,6 +983,7 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
                 }
             }
             $currentsectionfirst = false;
+
             if (($this->tcsettings['layoutstructure'] == 4) && (!$this->userisediting)) {
                 $currentsectionfirst = true;
             }
@@ -1105,7 +999,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
                 $weekdate -= 7200;                 // Subtract two hours to avoid possible DST problems.
             }
 
-            $numsections = $coursenumsections; // Because we want to manipulate this for column breakpoints.
             if (($this->tcsettings['layoutstructure'] == 3) && ($this->userisediting == false)) {
                 $loopsection = 1;
                 $numsections = 0;
@@ -1339,6 +1232,7 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
                 unset($sections[$thissection->section]);
             }
         }
+
         if ($this->userisediting and has_capability('moodle/course:update', $context)) {
             // Print stealth sections if present.
             foreach ($modinfo->get_section_info_all() as $section => $thissection) {
@@ -1381,56 +1275,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         // This ensures that a no-change page reload is correct.
         set_user_preference('topcoll_toggle_'.$course->id, $toggles);
 
-        return $o;
-    }
-    public function render_sections1($course, $sections, $format_options, $modinfo, $numsections){
-        global $PAGE;
-
-        $o = '';
-
-        foreach ($sections as $section => $thissection) {
-            if ($section == 0) {
-                $o .= html_writer::start_tag('div', array('id' => 'inline_area'));
-                if($format_options['section0_ontop']){ // section-0 is already shown on top
-                    $o .= html_writer::end_tag('div');
-                    continue;
-                }
-                // 0-section is displayed a little different then the others
-                if ($thissection->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
-                    $o .= $this->section_header($thissection, $course, false, 0);
-                    $o .= $this->courserenderer->course_section_cm_list($course, $thissection, 0);
-                    $o .= $this->courserenderer->course_section_add_cm_control($course, 0, 0);
-                    $o .= $this->section_footer();
-                }
-                $o .= html_writer::end_tag('div');
-                continue;
-            }
-            if ($section > $numsections) {
-                // activities inside this section are 'orphaned', this section will be printed as 'stealth' below
-                continue;
-            }
-            // Show the section if the user is permitted to access it, OR if it's not available
-            // but there is some available info text which explains the reason & should display,
-            // OR it is hidden but the course has a setting to display hidden sections as unavilable.
-            $showsection = $thissection->uservisible ||
-                ($thissection->visible && !$thissection->available && !empty($thissection->availableinfo)) ||
-                (!$thissection->visible && !$course->hiddensections);
-            if (!$showsection) {
-                continue;
-            }
-
-            if (!$PAGE->user_is_editing() && $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
-                // Display section summary only.
-                $o .= $this->section_summary($thissection, $course, null);
-            } else {
-                $o .= $this->section_header($thissection, $course, false, 0);
-                if ($thissection->uservisible) {
-                    $o .= $this->courserenderer->course_section_cm_list($course, $thissection, 0);
-                    $o .= $this->courserenderer->course_section_add_cm_control($course, $section, 0);
-                }
-                $o .= $this->section_footer();
-            }
-        }
         return $o;
     }
 
@@ -1641,5 +1485,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
             return array_merge($controls, $parentcontrols);
         }
     }
+
 
 }
