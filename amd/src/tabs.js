@@ -147,16 +147,16 @@ define(['jquery', 'jqueryui'], function($) {
 
                     // restoring generic tab name
                     var courseid = $('#courseid').attr('courseid');
-                    var tabnr = $(this).attr('id').substring(3);
+                    var genericTitle = $(this).attr('generic_title');
                     $.ajax({
                         url: "format/tabbedtopcoll/ajax/update_tab_name.php",
                         type: "POST",
-                        data: {'courseid': courseid, 'tabid': tabid, 'tab_name': 'Tab '+tabnr},
+                        data: {'courseid': courseid, 'tabid': tabid, 'tab_name': genericTitle},
                         success: function(result) {
                             if(result !== '') {
                                 console.log('Reset name of tab ID ' + tabid + ' to "' + result + '"');
-                                $('[data-itemid=' + result + ']').attr('data-value', 'Tab ' +
-                                    tabnr).find('.quickeditlink').html('Tab ' + tabnr);
+                                $('[data-itemid=' + result + ']').attr('data-value', genericTitle).
+                                find('.quickeditlink').html(genericTitle);
                             }
                         }
                     });

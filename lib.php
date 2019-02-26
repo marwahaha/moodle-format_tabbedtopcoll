@@ -93,12 +93,12 @@ class format_tabbedtopcoll extends format_topcoll {
                 'numsections' => array(
                     'default' => $defaultnumsections,
                     'type' => PARAM_INT,
+                    'element_type' => 'hidden',
                 ),
                 'hiddensections' => array(
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT,
                 ),
-
                 'section0_ontop' => array(
                     'default' => false,
                     'type' => PARAM_BOOL,
@@ -164,6 +164,7 @@ class format_tabbedtopcoll extends format_topcoll {
                 'toggleforegroundhoveropacity' => array(
                     'default' => get_config('format_topcoll', 'defaulttgbghvropacity'),
                     'type' => PARAM_RAW,
+                    'element_type' => 'hidden',
                 ),
                 'togglebackgroundcolour' => array(
                     'default' => $defaulttgbgcolour,
@@ -172,6 +173,7 @@ class format_tabbedtopcoll extends format_topcoll {
                 'togglebackgroundopacity' => array(
                     'default' => get_config('format_topcoll', 'defaulttgbgopacity'),
                     'type' => PARAM_RAW,
+//                    'element_type' => 'hidden',
                 ),
                 'togglebackgroundhovercolour' => array(
                     'default' => $defaulttgbghvrcolour,
@@ -180,6 +182,7 @@ class format_tabbedtopcoll extends format_topcoll {
                 'togglebackgroundhoveropacity' => array(
                     'default' => get_config('format_topcoll', 'defaulttgbghvropacity'),
                     'type' => PARAM_RAW,
+                    'element_type' => 'hidden',
                 ),
                 'showsectionsummary' => array(
                     'default' => get_config('format_topcoll', 'defaultshowsectionsummary'),
@@ -229,11 +232,11 @@ class format_tabbedtopcoll extends format_topcoll {
                 $sectionmenu[$i] = "$i";
             }
             $courseformatoptionsedit = array(
-                'numsections' => array(
-                    'label' => new lang_string('numbersections', 'format_topcoll'),
-                    'element_type' => 'select',
-                    'element_attributes' => array($sectionmenu),
-                ),
+//                'numsections' => array(
+//                    'label' => new lang_string('numbersections', 'format_topcoll'),
+//                    'element_type' => 'select',
+//                    'element_attributes' => array($sectionmenu),
+//                ),
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
                     'help' => 'hiddensections',
@@ -484,7 +487,7 @@ class format_tabbedtopcoll extends format_topcoll {
                     'label' => new lang_string('settoggleforegroundhoveropacity', 'format_topcoll'),
                     'help' => 'settoggleforegroundhoveropacity',
                     'help_component' => 'format_topcoll',
-                    'element_type' => 'select',
+                    'element_type' => 'hidden',
                     'element_attributes' => array($opacityvalues)
                 );
                 $courseformatoptionsedit['togglebackgroundcolour'] = array(
@@ -500,7 +503,7 @@ class format_tabbedtopcoll extends format_topcoll {
                     'label' => new lang_string('settogglebackgroundopacity', 'format_topcoll'),
                     'help' => 'settogglebackgroundopacity',
                     'help_component' => 'format_topcoll',
-                    'element_type' => 'select',
+                    'element_type' => 'hidden',
                     'element_attributes' => array($opacityvalues)
                 );
                 $courseformatoptionsedit['togglebackgroundhovercolour'] = array(
@@ -516,7 +519,7 @@ class format_tabbedtopcoll extends format_topcoll {
                     'label' => new lang_string('settogglebackgroundhoveropacity', 'format_topcoll'),
                     'help' => 'settogglebackgroundhoveropacity',
                     'help_component' => 'format_topcoll',
-                    'element_type' => 'select',
+                    'element_type' => 'hidden',
                     'element_attributes' => array($opacityvalues)
                 );
             } else {
@@ -822,7 +825,7 @@ class format_tabbedtopcoll extends format_topcoll {
         return $settings;
     }
 
-    private function get_context() {
+    public function get_context() {
         global $SITE;
 
         if ($SITE->id == $this->courseid) {
