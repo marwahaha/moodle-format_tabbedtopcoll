@@ -388,14 +388,12 @@ define(['jquery', 'jqueryui'], function($) {
                     }
                 });
 
-                // Get the first section id from the 1st visible tab - this will be used to determine the course ID
-                var sectionid = $('.topictab:visible').first().attr('sections').split(',')[0];
-
                 // Finally call php to write the data
+                var courseid = $('#courseid').attr('courseid');
                 $.ajax({
                     url: "format/tabbedtopcoll/ajax/update_tab_seq.php",
                     type: "POST",
-                    data: {'sectionid': sectionid, 'tab_seq': tabSeq},
+                    data: {'courseid': courseid, 'tab_seq': tabSeq},
                     success: function() {
 // X                    success: function(result) {
                         // X console.log('the new tab sequence: ' + result);
