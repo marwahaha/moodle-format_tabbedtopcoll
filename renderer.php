@@ -457,15 +457,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
                     array('class' => 'hidden', 'aria-hidden' => 'true'));
             }
 
-            if ($this->userisediting && has_capability('moodle/course:update', $context)) {
-                // again no cog wheel as edit now is part of the drop down menu
-//                $url = new moodle_url('/course/editsection.php', array('id' => $section->id, 'sr' => $sectionreturn));
-//                $o .= html_writer::link($url,
-//                    $this->output->pix_icon('t/edit', get_string('edit')),
-//                    array('title' => get_string('editsection', 'format_tabbedtopcoll'))
-//                );
-            }
-
             if ($this->tcsettings['showsectionsummary'] == 1) {
                 $o .= $this->section_summary_container($section);
             }
@@ -498,8 +489,8 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         $o = '';
         if($format_options['section0_ontop']) {
             $section0 = $sections[0];
-            $o .= html_writer::start_tag('div', array('id' => 'ontop_area', 'class' => 'section0_ontop'));
-            $o .= html_writer::start_tag('ul', array('id' => 'ontop_area', 'class' => 'topics'));
+//            $o .= html_writer::start_tag('div', array('id' => 'ontop_area', 'class' => 'section0_ontop'));
+            $o .= html_writer::start_tag('ul', array('id' => 'ontop_area', 'class' => 'topics section0_ontop'));
 
             // 0-section is displayed a little different then the others
             if ($section0->summary or !empty($modinfo->sections[0]) or $PAGE->user_is_editing()) {
@@ -509,12 +500,12 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
                 $o .= $this->section_footer();
             }
         } else {
-            $o .= html_writer::start_tag('div', array('id' => 'ontop_area'));
+//            $o .= html_writer::start_tag('div', array('id' => 'ontop_area'));
             $o .= html_writer::start_tag('ul', array('id' => 'ontop_area', 'class' => 'topics'));
         }
 
         $o .= $this->end_section_list();
-        $o .= html_writer::end_tag('div');
+//        $o .= html_writer::end_tag('div');
         return $o;
     }
 
