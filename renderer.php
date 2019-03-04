@@ -275,18 +275,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         return $o;
     }
 
-    /**
-     * Generate the starting container html for a list of sections.
-     * @return string HTML to output.
-     */
-    protected function start_section_list() {
-        if ($this->bsnewgrid) {
-            return html_writer::start_tag('ul', array('class' => 'topics bsnewgrid'));
-        } else {
-            return html_writer::start_tag('ul', array('class' => 'topics'));
-        }
-    }
-
     // A slightly different header for section-0 when showing on top
     protected function section0_ontop_header($section, $course, $onsectionpage, $sectionreturn=null) {
         global $PAGE;
@@ -532,6 +520,148 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
 
     // Render the sections of a course
     public function render_sections($course, $sections, $format_options, $modinfo, $context){
+        global $PAGE;
+
+        $o = '';
+
+        // General section if non-empty.
+        $thissection = $sections[0];
+        unset($sections[0]);
+        $o .= html_writer::start_tag('div', array('id' => 'inline_area'));
+        if (!$format_options['section0_ontop'] and ($thissection->summary or ! empty($modinfo->sections[0]) or $this->userisediting)) {
+            $o .= $this->section_header($thissection, $course, false, 0);
+            $o .= $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+            $o .= $this->courserenderer->course_section_add_cm_control($course, $thissection->section, 0);
+            $o .= $this->section_footer();
+        }
+        $o .= html_writer::end_tag('div');
+
+
+        $shownonetoggle = false;
+        $coursenumsections = $this->get_last_section_number();
+
+        if ($coursenumsections > 0) {
+            $sectiondisplayarray = array();
+            $numsections = $coursenumsections; // Because we want to manipulate this for column breakpoints.
+
+            if ($coursenumsections > 1) {
+                if (($this->userisediting) || ($this->tcsettings['onesection'] == 1)) {
+                    // Collapsed Topics all toggles.
+                    $o .= $this->toggle_all();
+                }
+                if ($this->tcsettings['displayinstructions'] == 2) {
+                    // Collapsed Topics instructions.
+                    $o .= $this->display_instructions();
+                }
+            }
+            $currentsectionfirst = false;
+            $section = 1;
+
+            $o .= $this->end_section_list();
+            if ((!$this->formatresponsive) && ($this->tcsettings['layoutcolumnorientation'] == 1)) { // Vertical columns.
+                $o .= html_writer::start_tag('div', array('class' => $this->get_row_class()));
+            }
+            $o .= $this->start_toggle_section_list();
+
+            $loopsection = 1;
+            $breaking = false; // Once the first section is shown we can decide if we break on another column.
+            $coursenumsections = 11;
+            while ($loopsection <= $coursenumsections) {
+                $thissection = $modinfo->get_section_info($section);
+
+                /* Show the section if the user is permitted to access it, OR if it's not available
+                  but there is some available info text which explains the reason & should display. */
+                $showsection = $thissection->uservisible ||
+                    ($thissection->visible && !$thissection->available && !empty($thissection->availableinfo));
+
+                if (($currentsectionfirst == true) && ($showsection == true)) {
+                    // Show the section if we were meant to and it is the current section:....
+                    $showsection = ($course->marker == $section);
+                }
+
+                if (!$showsection) {
+                    // Hidden section message is overridden by 'unavailable' control.
+                    if (!$course->hiddensections && $thissection->available) {
+                        $thissection->ishidden = true;
+                        $sectiondisplayarray[] = $thissection;
+                    }
+                } else {
+                    if ($this->isoldtogglepreference == true) {
+                        $togglestate = substr($this->togglelib->get_toggles(), $section, 1);
+                        if ($togglestate == '1') {
+                            $thissection->toggle = true;
+                        } else {
+                            $thissection->toggle = false;
+                        }
+                    } else {
+                        $thissection->toggle = $this->togglelib->get_toggle_state($thissection->section);
+                    }
+
+                    if ($this->courseformat->is_section_current($thissection)) {
+                        $this->currentsection = $thissection->section;
+                        $thissection->toggle = true; // Open current section regardless of toggle state.
+                        $this->togglelib->set_toggle_state($thissection->section, true);
+                    }
+
+                    $thissection->isshown = true;
+                    $sectiondisplayarray[] = $thissection;
+                }
+
+                $section++;
+
+                $loopsection++;
+                if (($currentsectionfirst == true) && ($loopsection > $coursenumsections)) {
+                    // Now show the rest.
+                    $currentsectionfirst = false;
+                    $loopsection = 1;
+                    $section = 1;
+                }
+            }
+
+            $shownsectioncount = 0;
+            if ((!$this->userisediting) && ($this->tcsettings['onesection'] == 2) && (!empty($this->currentsection))) {
+                $shownonetoggle = $this->currentsection; // One toggle open only, so as we have a current section it will be it.
+            }
+            foreach ($sectiondisplayarray as $thissection) {
+                $shownsectioncount++;
+
+                if (!empty($thissection->ishidden)) {
+                    $o .= $this->section_hidden($thissection);
+                } else if (!empty($thissection->issummary)) {
+                    $o .= $this->section_summary($thissection, $course, null);
+                } else if (!empty($thissection->isshown)) {
+                    $o .= $this->section_header($thissection, $course, false, 0);
+                    if ($thissection->uservisible) {
+                        $o .= $this->courserenderer->course_section_cm_list($course, $thissection, 0);
+                        $o .= $this->courserenderer->course_section_add_cm_control($course, $thissection->section, 0);
+                    }
+                    $o .= html_writer::end_tag('div');
+                    $o .= $this->section_footer();
+                }
+                unset($sections[$thissection->section]);
+            }
+        }
+        $o .= $this->end_section_list();
+
+        // Now initialise the JavaScript.
+        $toggles = $this->togglelib->get_toggles();
+        $this->page->requires->js_init_call('M.format_tabbedtopcoll.init', array(
+            $course->id,
+            $toggles,
+            $coursenumsections,
+            $this->defaulttogglepersistence,
+            $this->defaultuserpreference,
+            ((!$this->userisediting) && ($this->tcsettings['onesection'] == 2)),
+            $shownonetoggle,
+            $this->userisediting));
+
+        // Make sure the database has the correct state of the toggles if changed by the code.
+        // This ensures that a no-change page reload is correct.
+        set_user_preference('topcoll_toggle_'.$course->id, $toggles);
+
+        return $o;
+    }
+    public function render_sections2($course, $sections, $format_options, $modinfo, $context){
         global $PAGE;
 
         $o = '';
@@ -1263,7 +1393,7 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         return $o;
     }
 
-    public function render_sections_topics($course, $sections, $format_options, $modinfo, $numsections){
+    public function render_XXXsections_topics($course, $sections, $format_options, $modinfo, $numsections){
         global $PAGE;
 
         $o = '';
