@@ -100,7 +100,6 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         if ($this->formatresponsive) {
             $this->tccolumnwidth = 100; // Reset to default.
         }
-        echo $this->start_section_list();
 
         // Render the sections
         echo $this->render_sections($course, $sections, $format_options, $modinfo, $context);
@@ -513,7 +512,7 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
     public function render_sections($course, $sections, $format_options, $modinfo, $context){
         global $PAGE;
 
-        $o = '';
+        $o = $this->start_section_list();
 
         // General section if non-empty.
         $thissection = $sections[0];
