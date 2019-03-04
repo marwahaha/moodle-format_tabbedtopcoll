@@ -276,6 +276,36 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
 
     // A slightly different header for section-0 when showing on top
     protected function section0_ontop_header($section, $course, $onsectionpage, $sectionreturn=null) {
+        $o = '';
+        $o.= html_writer::start_tag('li', array('id' => 'section-'.$section->section, 'section-id' => $section->id,
+            'class' => 'section ontop main clearfix', 'role'=>'region',
+            'aria-label'=> get_section_name($course, $section)));
+
+        // Create a span that contains the section title to be used to create the keyboard section move menu.
+        $o .= html_writer::tag('span', get_section_name($course, $section), array('class' => 'hidden sectionname'));
+
+        $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
+        $o.= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
+
+        $rightcontent = $this->section_right_content($section, $course, $onsectionpage);
+        $o.= html_writer::tag('div', $rightcontent, array('class' => 'right side'));
+        $o.= html_writer::start_tag('div', array('class' => 'content'));
+
+        // No section name when on top
+//        $sectionname = html_writer::tag('span', $this->section_title($section, $course));
+//        $o.= $this->output->heading($sectionname, 3, 'sectionname' . $classes);
+
+        if ($section->uservisible || $section->visible) {
+            // Show summary if section is available or has availability restriction information.
+            // Do not show summary if section is hidden but we still display it because of course setting
+            // "Hidden sections are shown in collapsed form".
+            $o .= $this->format_summary_text($section);
+        }
+//        $o .= html_writer::end_tag('div');
+
+        return $o;
+    }
+    protected function section0_ontop_header0($section, $course, $onsectionpage, $sectionreturn=null) {
         global $PAGE;
 
         $o = '';
