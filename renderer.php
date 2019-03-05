@@ -292,8 +292,8 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         $o.= html_writer::start_tag('div', array('class' => 'content'));
 
         // No section name when on top
-//        $sectionname = html_writer::tag('span', $this->section_title($section, $course));
-//        $o.= $this->output->heading($sectionname, 3, 'sectionname' . $classes);
+        $sectionname = html_writer::tag('span', $this->section_title($section, $course));
+        $o.= $this->output->heading($sectionname, 3, 'hidden sectionname');
 
         if ($section->uservisible || $section->visible) {
             // Show summary if section is available or has availability restriction information.
@@ -494,7 +494,7 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
             $hasnamesecpg = ($section->section == 0 && (string) $section->name !== '');
 
             if ($hasnamesecpg) {
-                $o .= $this->output->heading($this->section_title($section, $course), 3, 'section-title');
+                $o .= $this->output->heading($this->section_title($section, $course), 3, 'sectionname');
             }
             $o .= $this->section_availability($section);
             $o .= html_writer::start_tag('div', array('class' => 'summary'));
