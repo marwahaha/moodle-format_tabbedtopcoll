@@ -196,8 +196,8 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         // if a tab sequence is equal to the number of tabs is found use it to arrange the tabs otherwise show them in default order
         if(sizeof($tab_seq) == sizeof($this->tabs)) {
             foreach ($tab_seq as $tabid) {
-                if(isset($tabs[$tabid]) && $tab = $this->tabs[$tabid] ) {
-                    $this->render_tab($tab);
+                if(isset($this->tabs[$tabid]) && $tab = $this->tabs[$tabid] ) {
+                    $o .= $this->render_tab($tab);
                 }
             }
         } else {
