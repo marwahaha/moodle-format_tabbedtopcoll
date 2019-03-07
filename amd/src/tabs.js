@@ -67,8 +67,8 @@ define(['jquery', 'jqueryui'], function($) {
                 // X console.log('----');
 
                 // Make this an active tab
-                $(".active").removeClass("active"); // First remove any active class
-                $(this).addClass('active'); // Then add the class to the clicked tab
+                $(".tablink.active").removeClass("active"); // First remove any active class from tabs
+                $(this).addClass('active'); // Then add the active class to the clicked tab
 
                 var clickedTabName;
                 if ($(this).find('.inplaceeditable-text')) {
