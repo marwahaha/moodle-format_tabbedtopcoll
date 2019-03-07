@@ -196,8 +196,9 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
         // if a tab sequence is equal to the number of tabs is found use it to arrange the tabs otherwise show them in default order
         if(sizeof($tab_seq) == sizeof($this->tabs)) {
             foreach ($tab_seq as $tabid) {
-                $tab = $this->tabs[$tabid];
-                $o .= $this->render_tab($tab);
+                if(isset($tabs[$tabid]) && $tab = $this->tabs[$tabid] ) {
+                    $this->render_tab($tab);
+                }
             }
         } else {
             foreach ($this->tabs as $tab) {
@@ -212,6 +213,9 @@ class format_tabbedtopcoll_renderer extends format_topcoll_renderer {
     // Render a standard tab
     public function render_tab($tab) {
         global $DB, $PAGE, $OUTPUT;
+        if(!isset($tab)) {
+            return false;
+        }
         $o = '';
         if($tab->sections == '') {
             $o .= html_writer::start_tag('li', array('class'=>'tabitem nav-item', 'style' => 'display:none;'));
