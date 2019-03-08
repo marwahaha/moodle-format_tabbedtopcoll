@@ -385,7 +385,7 @@ define(['jquery', 'jqueryui'], function($) {
                     if (typeof tabid !== 'undefined') {
                         if (tabSeq === '') {
                             tabSeq = tabid;
-                        } else if (tabSeq.indexOf(tabid) === -1) { // Only add the tab ID if not already in the sequence
+                        } else {
                             tabSeq = tabSeq.concat(',').concat(tabid);
                         }
                     }
