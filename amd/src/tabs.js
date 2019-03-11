@@ -378,18 +378,20 @@ define(['jquery', 'jqueryui'], function($) {
                 initFunctions();
 
                 // Get the new tab sequence and write it back to format options
-                var tabSeq = '';
+                var tabSeqA = [];
+
                 // Get the id of each tab according to their position (left to right)
                 $('.tablink').each(function() {
                     var tabid = $(this).attr('id');
                     if (typeof tabid !== 'undefined') {
-                        if (tabSeq === '') {
-                            tabSeq = tabid;
-                        } else {
-                            tabSeq = tabSeq.concat(',').concat(tabid);
+                        if (!tabSeqA.includes(tabid)) {
+                            tabSeqA.push(tabid);
                         }
                     }
                 });
+
+                // Implode the array to a string
+                var tabSeq = tabSeqA.join();
 
                 // Finally call php to write the data
                 var courseid = $('#courseid').attr('courseid');
