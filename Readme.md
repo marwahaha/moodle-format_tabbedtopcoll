@@ -1,5 +1,5 @@
 ﻿# moodle-format_tabbedtopcoll
-This course format is based on the Collapsed Topics format by G J Barnard but adds tab-abilties to it!
+This course format is based on the Collapsed Topics format by G J Barnard but adds tab-abilities to it!
 
 So initially the page rendering is identical to the standard Collapsed Topics course format - it is then only in edit mode that you will discover some changes.
 
